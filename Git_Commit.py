@@ -1,4 +1,3 @@
-from builtins import None
 
 try:
     # for eclipse code-completion 
@@ -20,6 +19,8 @@ class Git_Commit:
         self.subject       = None
         self.body          = None
         
+        self.svn_rev_num   = None
+        
 #         self.log_commit_data('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\bitbucket_repo_setup_scripts\\test__commit_log.txt')
         
 #         self.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True) 
@@ -40,9 +41,14 @@ class Git_Commit:
         self.author      = commit_data_l.pop(0)                                          
         self.author_date = commit_data_l.pop(0)                                          
         self.subject     = commit_data_l.pop(0)                                          
-        self.body        = commit_data_l.pop(0)                                          
+        self.body        = commit_data_l.pop(0)                
+        
                                                                                          
-                                                                                         
+        # if this commit is from a git repo created by converting from an svn repo
+        if 'git-svn-id: ' in self.body:
+            self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+            
+        print(self.svn_rev_num)
        
         
     # if no log_file_path is given, will log to default location
