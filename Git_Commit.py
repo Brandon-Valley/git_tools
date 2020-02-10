@@ -6,7 +6,7 @@ except:
     import commit_log_format_strings as clfs
 
 
-VAR_DELIM = '@#$__VAR_DELIM__$#@'
+VAR_DELIM = '__$$@-VAR_DELIM-@$__'
 
 class Git_Commit:
     # run_git_cmd will execute the given command inside the repo that initialized the Git_Commit class
@@ -34,36 +34,43 @@ class Git_Commit:
                                                                                       + VAR_DELIM + clfs.BODY        \
                                                                                 + '"'
                                                                                        
-        commit_data_str = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
-        commit_data_l = commit_data_str.split(VAR_DELIM)
+        raw_commit_data = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+        
+        if type(raw_commit_data) == list: # if someone used newlines in their commit body
+            raw_commit_data = ''.join(raw_commit_data)
+            
+#         print(raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+        commit_data_l = raw_commit_data.split(VAR_DELIM)
         commit_data_l.pop(0) # remove first empty element
 
         self.author      = commit_data_l.pop(0)                                          
         self.author_date = commit_data_l.pop(0)                                          
         self.subject     = commit_data_l.pop(0)                                          
-        self.body        = commit_data_l.pop(0)                
+        self.body        = commit_data_l.pop(0)  
+        
+        print('  authord_date: ', self.author_date)              
         
         
-        # fill self.changed_files_l
-        cmd = 'git show --name-only ' + self.abrv_commit_hash
-        raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
-
-        print(raw_commit_data_l)
-        print(raw_commit_data_l[1])
-        
-        for line in reversed(raw_commit_data_l):
-            print(line)
-            if line[0] == '\n':
-                break
-            
-            self.changed_files_l.append(line[:-1]) # trim newline
-                        
-        self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
-                
-                                                                                         
-        # if this commit is from a git repo created by converting from an svn repo
-        if 'git-svn-id: ' in self.body:
-            self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+#         # fill self.changed_files_l
+#         cmd = 'git show --name-only ' + self.abrv_commit_hash
+#         raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+# 
+#         print(raw_commit_data_l)
+#         print(raw_commit_data_l[1])
+#         
+#         for line in reversed(raw_commit_data_l):
+#             print(line)
+#             if line[0] == '\n':
+#                 break
+#             
+#             self.changed_files_l.append(line[:-1]) # trim newline
+#                         
+#         self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
+#                 
+#                                                                                          
+#         # if this commit is from a git repo created by converting from an svn repo
+#         if 'git-svn-id: ' in self.body:
+#             self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
             
        
         

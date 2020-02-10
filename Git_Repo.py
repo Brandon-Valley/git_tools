@@ -26,7 +26,7 @@ class Git_Repo:
 	def __init__(self, repo_path, remote_base_url = None):
 		self.path     = repo_path
 		self.name     = ntpath.basename(self.path)
-		self.commit_l = None
+		self.commit_l = []
 		self.url      = None
 		
 		if remote_base_url != None:
@@ -54,18 +54,7 @@ class Git_Repo:
 		cd(og_cwd) # return to original cwd
 		return output
 			
-	# returns T / F if a git repo has already been initialized in self.path
-	# returns False if path does not exist
-	def exists(self):
-		if not os.path.isdir(self.path):
-			return False
 
-		og_cwd = os.getcwd()
-		cd(self.path)
-		
-		repo_exists = not su.fatal_error('git rev-parse --is-inside-work-tree')
-		cd(og_cwd) # return to original cwd
-		return repo_exists
 
 
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -105,6 +94,7 @@ class Git_Repo:
 	'''
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
+	# most recent commit at position 0
 	def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
 		raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output , print_cmd, decode = True)
 		
@@ -114,11 +104,45 @@ class Git_Repo:
 		return abrv_commit_hash_l
 
 
+	# returns T / F if a git repo has already been initialized in self.path
+	# returns False if path does not exist
+	def exists(self):
+		if not os.path.isdir(self.path):
+			return False
+
+		og_cwd = os.getcwd()
+		cd(self.path)
+		
+		repo_exists = not su.fatal_error('git rev-parse --is-inside-work-tree')
+		cd(og_cwd) # return to original cwd
+		return repo_exists
+
+
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''                                                                           
+	        Internal Build Commands
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
 	def build_commit_l(self): 
 # 		Git_Commit.Git_Commit('34f2fab', self.run_git_cmd)
-		abrv_commit_hash_l = self.get_abrv_commit_hash_l(print_output = True, print_cmd = True)
-		print(abrv_commit_hash_l)
+		abrv_commit_hash_l = self.get_abrv_commit_hash_l()
+# 		print(abrv_commit_hash_l)
+		for abiv_commit_hash in abrv_commit_hash_l:
+			c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+			print('just made commit: ', c.abrv_commit_hash)#````````````````````````````````````````````````````````````````````
+			self.commit_l.append(c)
+			print('just appended commit: ', self.commit_l[-1].abrv_commit_hash)#`````````````````````````````````````````````````````````````
+			print('just appended commit: ', self.commit_l[-1].subject)#`````````````````````````````````````````````````````````````
+			print('just appended commit: ', self.commit_l[-1].body)#`````````````````````````````````````````````````````````````
+		
+		print('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+		print(self.commit_l[0].subject)
+		print(self.commit_l[0].body)
+		print('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
+		print(self.commit_l[-1].subject)
+
+		print(len(self.commit_l))
 
 # 	def init_commit(self, abrv_commit_hash):
 
