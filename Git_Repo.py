@@ -125,24 +125,12 @@ class Git_Repo:
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
 	def build_commit_l(self): 
-# 		Git_Commit.Git_Commit('34f2fab', self.run_git_cmd)
 		abrv_commit_hash_l = self.get_abrv_commit_hash_l()
-# 		print(abrv_commit_hash_l)
 		for abiv_commit_hash in abrv_commit_hash_l:
 			c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
-			print('just made commit: ', c.abrv_commit_hash)#````````````````````````````````````````````````````````````````````
 			self.commit_l.append(c)
-			print('just appended commit: ', self.commit_l[-1].abrv_commit_hash)#`````````````````````````````````````````````````````````````
-			print('just appended commit: ', self.commit_l[-1].subject)#`````````````````````````````````````````````````````````````
-			print('just appended commit: ', self.commit_l[-1].body)#`````````````````````````````````````````````````````````````
-		
-		print('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
-		print(self.commit_l[0].subject)
-		print(self.commit_l[0].body)
-		print('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
-		print(self.commit_l[-1].subject)
 
-		print(len(self.commit_l))
+		print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
 
 # 	def init_commit(self, abrv_commit_hash):
 

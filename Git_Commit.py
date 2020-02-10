@@ -51,26 +51,26 @@ class Git_Commit:
         print('  authord_date: ', self.author_date)              
         
         
-#         # fill self.changed_files_l
-#         cmd = 'git show --name-only ' + self.abrv_commit_hash
-#         raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
-# 
-#         print(raw_commit_data_l)
-#         print(raw_commit_data_l[1])
-#         
-#         for line in reversed(raw_commit_data_l):
-#             print(line)
-#             if line[0] == '\n':
-#                 break
-#             
-#             self.changed_files_l.append(line[:-1]) # trim newline
-#                         
-#         self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
-#                 
-#                                                                                          
-#         # if this commit is from a git repo created by converting from an svn repo
-#         if 'git-svn-id: ' in self.body:
-#             self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+        # fill self.changed_files_l
+        cmd = 'git show --name-only ' + self.abrv_commit_hash
+        raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+ 
+        print(raw_commit_data_l)
+        print(raw_commit_data_l[1])
+         
+        for line in reversed(raw_commit_data_l):
+            print(line)
+            if line[0] == '\n':
+                break
+             
+            self.changed_files_l.append(line[:-1]) # trim newline
+                         
+        self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
+                 
+                                                                                          
+        # if this commit is from a git repo created by converting from an svn repo
+        if 'git-svn-id: ' in self.body:
+            self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
             
        
         
