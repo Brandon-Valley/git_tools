@@ -14,12 +14,14 @@ class Git_Commit:
         self.run_git_cmd      = run_git_cmd
         self.abrv_commit_hash = abbreviated_commit_hash
         
-        self.author        = None
-        self.author_date   = None
-        self.subject       = None
-        self.body          = None
+        self.author          = None
+        self.author_date     = None
+        self.subject         = None
+        self.body            = None
+                           
+        self.changed_files_l = []
         
-        self.svn_rev_num   = None
+        self.svn_rev_num     = None
         
 #         self.log_commit_data('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\bitbucket_repo_setup_scripts\\test__commit_log.txt')
         
@@ -33,22 +35,40 @@ class Git_Commit:
                                                                                 + '"'
                                                                                        
         commit_data_str = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
-#         print(raw_commit_data)
         commit_data_l = commit_data_str.split(VAR_DELIM)
         commit_data_l.pop(0) # remove first empty element
-#         print(commit_data_l)#```````````````````````````````````````````````````````````````````````````````````````````````````
 
         self.author      = commit_data_l.pop(0)                                          
         self.author_date = commit_data_l.pop(0)                                          
         self.subject     = commit_data_l.pop(0)                                          
         self.body        = commit_data_l.pop(0)                
         
+        
+        # fill self.changed_files_l
+        cmd = 'git show --name-only ' + self.abrv_commit_hash
+        raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+
+        print(raw_commit_data_l)
+        print(raw_commit_data_l[1])
+        
+        for line in reversed(raw_commit_data_l):
+            print(line)
+            if line[0] == '\n':
+                break
+            
+            self.changed_files_l.append(line[:-1]) # trim newline
+            
+#         print(self.changed_files_l)
+            
+        self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
+        
+#         print(self.changed_files_l)
+        
                                                                                          
         # if this commit is from a git repo created by converting from an svn repo
         if 'git-svn-id: ' in self.body:
             self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
             
-        print(self.svn_rev_num)
        
         
     # if no log_file_path is given, will log to default location
