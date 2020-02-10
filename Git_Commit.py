@@ -57,13 +57,9 @@ class Git_Commit:
                 break
             
             self.changed_files_l.append(line[:-1]) # trim newline
-            
-#         print(self.changed_files_l)
-            
+                        
         self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
-        
-#         print(self.changed_files_l)
-        
+                
                                                                                          
         # if this commit is from a git repo created by converting from an svn repo
         if 'git-svn-id: ' in self.body:
@@ -85,8 +81,9 @@ class Git_Commit:
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n G?   signature options - check doc for more info -- manually trimmed:                                                            %G? %n---------%n GS   show the name of the signer for a signed commit:                                                                            %GS %n---------%n GK   show the key used to sign a signed commit:                                                                                  %GK %n---------%n GF   show the fingerprint of the key used to sign a signed commit:                                                               %GF %n---------%n GP   show the fingerprint of the primary key whose subkey was used to sign a signed commit:                                      %GP %n---------%n gD   reflog selector - check doc for more info -- manually trimmed:                                                              %gD %n---------%n gd   shortened reflog selector; - check doc for more info -- manually trimmed:                                                   %gd" >> ' + log_file_path)
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n gn   reflog identity name:                                                                                                       %gn %n---------%n gN   reflog identity name (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                            %gN %n---------%n ge   reflog identity email:                                                                                                      %ge %n---------%n gE   reflog identity email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                           %gE %n---------%n gs   reflog subject:                                                                                                             %gs" >> ' + log_file_path)
 
-    
-    
+    # undo with git switch -
+    def checkout(self):
+        self.run_git_cmd('git checkout ' + self.abrv_commit_hash , print_output = True, print_cmd = True)
     
     
     
