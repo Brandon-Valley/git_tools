@@ -99,11 +99,26 @@ class Git_Repo:
 	def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'      , print_output
 																												   , print_cmd)
 
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''                                                                           
+	        Specific Utility Commands - Return
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+
+	def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
+		raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output , print_cmd, decode = True)
+		
+		abrv_commit_hash_l = []
+		for line in raw_l:
+			abrv_commit_hash_l.append(line.rstrip())
+		return abrv_commit_hash_l
+
 
 
 	def build_commit_l(self): 
-		Git_Commit.Git_Commit('34f2fab', self.run_git_cmd)
-
+# 		Git_Commit.Git_Commit('34f2fab', self.run_git_cmd)
+		abrv_commit_hash_l = self.get_abrv_commit_hash_l(print_output = True, print_cmd = True)
+		print(abrv_commit_hash_l)
 
 # 	def init_commit(self, abrv_commit_hash):
 
@@ -223,9 +238,9 @@ def main():
 
 	g = Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True)
-# 	g.build_commit_l()
+	g.build_commit_l()
 
-	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True, run_type = "call")
+# 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True, run_type = "call")
 	
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')
 # 	import subprocess
