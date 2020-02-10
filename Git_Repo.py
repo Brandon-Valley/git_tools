@@ -6,7 +6,7 @@ import time
 
 
 import Git_Commit
-import subprocess_utils as su
+# import subprocess_utils as su
 # os.chdir("C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0")
 # o = subprocess.check_output('git status')
 # print(o)
@@ -17,7 +17,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..\\..'))
 
 # from parent dir
 from submodules.exception_utils import exception_utils as eu
-
+from submodules.subprocess_utils import subprocess_utils as su
 	
 	
 
