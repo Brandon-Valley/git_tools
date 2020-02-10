@@ -1,15 +1,10 @@
-import os
-# import subprocess
 import ntpath
 import time
 
 
-
 import Git_Commit
-# import subprocess_utils as su
-# os.chdir("C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0")
-# o = subprocess.check_output('git status')
-# print(o)
+
+
 
 # to import from parent dir
 import sys, os
@@ -39,7 +34,7 @@ class Git_Repo:
 		
 		
 	
-	def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen'):
+	def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False):
 # 		if run_type not in ['popen']
 		eu.error_if_param_invalid(run_type, ['popen', 'call'])
 		
@@ -47,9 +42,9 @@ class Git_Repo:
 		cd(self.path)
 		
 		if run_type == 'popen':
-			su.run_cmd_popen(cmd, print_output, print_cmd, shell)
+			output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode)
 		elif run_type == 'call':
-			su.run_cmd_call (cmd, print_cmd, shell)
+			output = su.run_cmd_call (cmd, print_cmd, shell, decode)
 		
 		if sleep > 0:
 			if print_output:
@@ -57,6 +52,7 @@ class Git_Repo:
 			time.sleep(sleep)
 		
 		cd(og_cwd) # return to original cwd
+		return output
 			
 	# returns T / F if a git repo has already been initialized in self.path
 	# returns False if path does not exist
@@ -72,9 +68,11 @@ class Git_Repo:
 		return repo_exists
 
 
-	""" VVVVVVVVVV                          VVVVVVVVVV"""
-	""" VVVVVVVVVV Basic Commands - One Arg VVVVVVVVVV"""
-	""" VVVVVVVVVV                          VVVVVVVVVV"""
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''                                                                           
+	        Basic Commands - One Arg
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
 	def commit_simple        (self, msg        , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'   , print_output
 																											   									, print_cmd)
@@ -87,9 +85,12 @@ class Git_Repo:
 	def merge_no_ff          (self, branch_name, print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name , print_output
 																																				, print_cmd
 																																				, sleep = 0.5) # not optimized
-	""" VVVVVVVVVV                          VVVVVVVVVV"""
-	""" VVVVVVVVVV Basic Commands - No Args VVVVVVVVVV"""
-	""" VVVVVVVVVV                          VVVVVVVVVV"""
+
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''                                                                           
+	        Basic Commands - No Args
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
 	def flow_init_default (self, print_output = False, print_cmd = False):  self.run_git_cmd('git flow init -d -f' , print_output
 																												   , print_cmd)
