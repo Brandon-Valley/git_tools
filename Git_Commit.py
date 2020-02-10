@@ -1,5 +1,13 @@
+from builtins import None
 
-import commit_log_format_strings as clfs
+try:
+    # for eclipse code-completion 
+    from submodules.git_tools import commit_log_format_strings as clfs
+except:
+    import commit_log_format_strings as clfs
+
+
+VAR_DELIM = '@#$__VAR_DELIM__$#@'
 
 class Git_Commit:
     # run_git_cmd will execute the given command inside the repo that initialized the Git_Commit class
@@ -7,22 +15,34 @@ class Git_Commit:
         self.run_git_cmd      = run_git_cmd
         self.abrv_commit_hash = abbreviated_commit_hash
         
-        self.author = None
-        self.date   = None
-        self.msg    = None
+        self.author        = None
+        self.author_date   = None
+        self.subject       = None
+        self.body          = None
         
 #         self.log_commit_data('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\bitbucket_repo_setup_scripts\\test__commit_log.txt')
         
 #         self.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True) 
 
-        cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:"' + clfs.AUTHOR_NAME + ' ' + clfs.AUTHOR_EMAIL + '"'
+        # build and run cmd to extract commit info
+        cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:"' + VAR_DELIM + clfs.AUTHOR_NAME \
+                                                                                      + VAR_DELIM + clfs.AUTHOR_DATE \
+                                                                                      + VAR_DELIM + clfs.SUBJECT     \
+                                                                                      + VAR_DELIM + clfs.BODY        \
+                                                                                + '"'
                                                                                        
-        raw_commit_data = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
-#         print(raw_commit_data.decode("utf-8") )
-#         print(type((raw_commit_data.decode("utf-8") )))
-        print(raw_commit_data)
+        commit_data_str = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+#         print(raw_commit_data)
+        commit_data_l = commit_data_str.split(VAR_DELIM)
+        commit_data_l.pop(0) # remove first empty element
+#         print(commit_data_l)#```````````````````````````````````````````````````````````````````````````````````````````````````
 
-
+        self.author      = commit_data_l.pop(0)                                          
+        self.author_date = commit_data_l.pop(0)                                          
+        self.subject     = commit_data_l.pop(0)                                          
+        self.body        = commit_data_l.pop(0)                                          
+                                                                                         
+                                                                                         
        
         
     # if no log_file_path is given, will log to default location

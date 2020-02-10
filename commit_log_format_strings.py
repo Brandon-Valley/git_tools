@@ -22,11 +22,11 @@ AUTHOR_NAME = '%an'
 #  aE   author email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                              matthew.w.rosa@boeing.com 
 # ---------                                                                                                                 
 #  al   author email local-part (the part before the @ sign):                                                                 %al 
-AUTHOR_EMAIL = '%al'
 # ---------                                                                                                                 
 #  aL   author local-part (see %al) respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                %aL 
 # ---------                                                                                                                 
 #  ad   author date (format respects --date= option):                                                                         Thu Jul 11 18:46:48 2019 +0000 
+AUTHOR_DATE = '%ad'
 # ---------                                                                                                                 
 #  aD   author date, RFC2822 style:                                                                                           Thu, 11 Jul 2019 18:46:48 +0000 
 # ---------                                                                                                                 
@@ -74,17 +74,19 @@ AUTHOR_EMAIL = '%al'
 # ---------                                                                                                                 
 #  e   encoding:                                                                                                                  
 # ---------                                                                                                                
-#  s   subject:                                                                                                               changed the adc to hold CS_ADC low during "Use adc" portion of statemachine. 
+#  s   subject:                                                                                                               changed the adc to hold CS_ADC low during "Use adc" portion of statemachine.
+SUBJECT = "%s" 
 # ---------                                                                                                                
 #  f   sanitized subject line, suitable for a filename:                                                                       changed-the-adc-to-hold-CS_ADC-low-during-Use-adc-portion-of-statemachine 
 # ---------                                                                                                                
 #  b   body:                                                                                                                  git-svn-id: https://wpns04.stl.mo.boeing.com/ANPsvn/Trunk/ip_repo@484 36f637cb-dc32-44b4-bb99-f64234f869f0
+BODY = "%b"
 #                                                                                                                          
 # ---------                                                                                                                
 #  B   raw body (unwrapped subject and body):                                                                                 changed the adc to hold CS_ADC low during "Use adc" portion of statemachine. 
 #                                                                                                                          
 # git-svn-id: https://wpns04.stl.mo.boeing.com/ANPsvn/Trunk/ip_repo@484 36f637cb-dc32-44b4-bb99-f64234f869f0               
-#                                                                                                                          
+#   
 # ---------                                                                                                                
 #  N   commit notes:                                                                                                              
 # ---------                                                                                                                
