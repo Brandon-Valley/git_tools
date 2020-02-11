@@ -1,3 +1,11 @@
+''' [======- - - - -=================- All Utilities Standard -=================- - - - -======] '''
+# to allow for relative imports
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], os.path.dirname(os.path.abspath(__file__))))
+''' [======- - - - - - -=============- - - - -========- - - - -=============- - - - - - -======] '''
+
+
+
 import ntpath
 import time
 
@@ -13,10 +21,11 @@ except:
 import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..\\..')) 
 
+# fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # from parent dir
 from submodules.exception_utils import exception_utils as eu
 from submodules.subprocess_utils import subprocess_utils as su
-from submodules.logger import json_logger
+from submodules.logger import json_logger, txt_logger
 from submodules.file_system_utils import  file_system_utils as fsu
 	
 	
@@ -170,6 +179,18 @@ class Git_Repo:
 	        Log Functions
 	'''
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+					
+	def log_full_repo_show(self, out_file_path):
+		print('  Logging the show output of all commits to:  ', out_file_path, '...')
+		txt_logger.write([], out_file_path)
+		
+		for commit in self.commit_l:
+			txt_logger.write('------------------------', out_file_path)
+			cmd = 'git show --name-only ' + commit.abrv_commit_hash + ' >> ' + out_file_path
+# 			cmd = 'git show --name-only ' + commit.abrv_commit_hash
+			self.run_git_cmd(cmd, print_output = True, print_cmd = True, shell = True, decode = True)
+			
+	
 	
 	# logs self.commit_l into a json file that can be loaded back in to avoid
 	# waiting 40 seconds to build it each time for testing
@@ -194,6 +215,7 @@ class Git_Repo:
 # 			c.print_me()#`````````````````````````````````````````````````````````````````````````````````````````````
 			self.commit_l.append(c)
 
+
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 	'''																		   
 			Misc. Testing Functions
@@ -203,6 +225,8 @@ class Git_Repo:
 		self.commit_l[0].print_me()
 		self.commit_l[-1].print_me()
 		print('size of self.commit_l:  ', len(self.commit_l))
+		
+	
 		
 
 
@@ -316,37 +340,39 @@ class Git_Repo:
 	
 	
 def main():
-# 	SUBMODULE_REPO_PATH = "C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0\\submodule_repo"
-# 	SUBMODULE_REPO_URL = "https://ba-bit.web.boeing.com/users/mt204e/repos/submodule_repo"
-# 	TOP_LVL_REPO_PATH = "C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0"
-# 	
-# 	# commit_all_files(SUBMODULE_REPO_PATH, 'Initialized Repository')
-# 	# add_submodule(TOP_LVL_REPO_PATH, SUBMODULE_REPO_URL)
-# 	
-# 	add_new_repo_as_submodule(TOP_LVL_REPO_PATH, SUBMODULE_REPO_PATH, SUBMODULE_REPO_URL)
-# 	
-
-	g = Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
-# 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True)
-	g.build_commit_l(limited_load = True)
-	
-# 	print(g.commit_l[-1].subject)
-	g.print_commit_l_first_and_last()
-# 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True, run_type = "call")
-	
-# 	g.run_git_cmd('git log 34f2fab -n1 --oneline > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')
-# 	import subprocess
-# 	cd(g.path)
-# 	
-# # 	p = subprocess.Popen(['git', 'log',  '34f2fab',  '-n1',  '--oneline ', ' > ',  "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"])
-# 	
-# # 	subprocess.call('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:%h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"' , shell = True)
-# 	su.run_cmd('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:%h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"', shell=True )
+	import repo_transfer
+	repo_transfer.main()
+# # 	SUBMODULE_REPO_PATH = "C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0\\submodule_repo"
+# # 	SUBMODULE_REPO_URL = "https://ba-bit.web.boeing.com/users/mt204e/repos/submodule_repo"
+# # 	TOP_LVL_REPO_PATH = "C:\\Users\\mt204e\\Documents\\test\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0"
+# # 	
+# # 	# commit_all_files(SUBMODULE_REPO_PATH, 'Initialized Repository')
+# # 	# add_submodule(TOP_LVL_REPO_PATH, SUBMODULE_REPO_URL)
+# # 	
+# # 	add_new_repo_as_submodule(TOP_LVL_REPO_PATH, SUBMODULE_REPO_PATH, SUBMODULE_REPO_URL)
+# # 	
 # 
-# # 	print('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH: %h\n  BODY: %b\n  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')
-# # 	import os
-# # 	os.system('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:\n\n\n %h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"' )
+# 	g = Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
+# # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True)
+# 	g.build_commit_l(limited_load = True)
 # 	
+# # 	print(g.commit_l[-1].subject)
+# 	g.print_commit_l_first_and_last()
+# # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True, run_type = "call")
+# 	
+# # 	g.run_git_cmd('git log 34f2fab -n1 --oneline > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')
+# # 	import subprocess
+# # 	cd(g.path)
+# # 	
+# # # 	p = subprocess.Popen(['git', 'log',  '34f2fab',  '-n1',  '--oneline ', ' > ',  "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"])
+# # 	
+# # # 	subprocess.call('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:%h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"' , shell = True)
+# # 	su.run_cmd('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:%h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"', shell=True )
+# # 
+# # # 	print('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH: %h\n  BODY: %b\n  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')
+# # # 	import os
+# # # 	os.system('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:\n\n\n %h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt"' )
+# # 	
 	
 	
 if __name__ == '__main__':

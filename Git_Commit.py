@@ -1,3 +1,11 @@
+''' [======- - - - -=================- All Utilities Standard -=================- - - - -======] '''
+# to allow for relative imports
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], os.path.dirname(os.path.abspath(__file__))))
+''' [======- - - - - - -=============- - - - -========- - - - -=============- - - - - - -======] '''
+
+
+
 
 try:
     # for eclipse code-completion 
@@ -116,12 +124,12 @@ class Git_Commit:
                 self.svn_rev_num    )
         
     def load_from_log_data(self, data_tup):
-        self.author         = data_tup.pop(0)
-        self.author_date    = data_tup.pop(0) 
-        self.subject        = data_tup.pop(0) 
-        self.body           = data_tup.pop(0) 
-        self.changed_files_ = data_tup.pop(0)
-        self.svn_rev_num    = data_tup.pop(0) 
+        self.author          = data_tup.pop(0)
+        self.author_date     = data_tup.pop(0) 
+        self.subject         = data_tup.pop(0) 
+        self.body            = data_tup.pop(0) 
+        self.changed_files_l = data_tup.pop(0)
+        self.svn_rev_num     = data_tup.pop(0) 
         
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -130,7 +138,15 @@ class Git_Commit:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     def print_me(self):
-        print('Commit Print:  ', self.abrv_commit_hash, '  Subject: ', self.subject)
+#         print('Commit Print:  ', self.abrv_commit_hash, '  Subject: ', self.subject)
+        print('Commit print_me:  ', self.abrv_commit_hash)
+        print('  author         :  ', self.author          )
+        print('  author_date    :  ', self.author_date     )
+        print('  subject        :  ', self.subject         )
+        print('  body           :  ', self.body            )
+        print('  changed_files_l:  ', self.changed_files_l )
+        print('  svn_rev_num    :  ', self.svn_rev_num     )
+
         
     
         
