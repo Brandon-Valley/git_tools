@@ -13,9 +13,13 @@ sys.path.insert(1, os.path.join(sys.path[0], '..\\..'))
 # from parent dir
 from submodules.exception_utils import exception_utils as eu
 from submodules.subprocess_utils import subprocess_utils as su
+from submodules.logger import json_logger
+from submodules.file_system_utils import  file_system_utils as fsu
 	
 	
-
+COMMIT_L_LOG_JSON_FILE_PATH = 'commit_l.json'
+LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS = True
+LOG_COMMIT_L = True
 	
 	
 def cd(dir_path):
@@ -120,17 +124,76 @@ class Git_Repo:
 
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 	'''                                                                           
-	        Internal Build Commands
+	        Internal Build Functions
 	'''
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
+	# takes about 40 sec for ip_repo with no prints
 	def build_commit_l(self): 
+		
+		if LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS and fsu.is_file(COMMIT_L_LOG_JSON_FILE_PATH):
+			print('Loading commit_l from log file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
+			self.load_commit_l_from_log()
+		else:
+		
+			print('building commit_l...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+			abrv_commit_hash_l = self.get_abrv_commit_hash_l()
+			for abiv_commit_hash in abrv_commit_hash_l:
+				c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+				self.commit_l.append(c)
+	
+			print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
+			
+			if LOG_COMMIT_L:
+				print('Logging newly created commit_l to json file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
+				self.log_commit_l()
+
+
+
+
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''                                                                           
+	        Log Functions
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	
+	# logs self.commit_l into a json file that can be loaded back in to avoid
+	# waiting 40 seconds to build it each time for testing
+	def log_commit_l(self):
+		log_l = []
+		
+		for commit in self.commit_l:
+			log_l.append(commit.json_log_tup())
+			
+		json_logger.write(log_l, COMMIT_L_LOG_JSON_FILE_PATH)
+		
+	def load_commit_l_from_log(self):
+		commit_data_l = json_logger.read(COMMIT_L_LOG_JSON_FILE_PATH)
 		abrv_commit_hash_l = self.get_abrv_commit_hash_l()
-		for abiv_commit_hash in abrv_commit_hash_l:
-			c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+		
+		if len(abrv_commit_hash_l) != len(commit_data_l):
+			raise Exception("ERROR:  len(abrv_commit_hash_l) != len(commit_data_l): ", len(abrv_commit_hash_l), '  !=  ', len(commit_data_l), \
+							' the number of commits in the repo is different than the number of commits in the log file')
+		
+		for commit_num, commit_data_tup in enumerate(commit_data_l):
+			c = Git_Commit.Git_Commit(abrv_commit_hash_l[commit_num], self.run_git_cmd, commit_data_tup)
+# 			c.print_me()#`````````````````````````````````````````````````````````````````````````````````````````````
 			self.commit_l.append(c)
 
-		print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+	'''																		   
+			Misc. Testing Functions
+	'''
+	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''	
+	def print_commit_l_first_and_last(self):
+		self.commit_l[0].print_me()
+		self.commit_l[-1].print_me()
+		
+
+
+# 		from submodules.logger import json_logger
+# 		json_logger.write(self.commit_l, 'test_commit_l.json')
+		
 
 # 	def init_commit(self, abrv_commit_hash):
 
@@ -251,7 +314,9 @@ def main():
 	g = Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True)
 	g.build_commit_l()
-
+	
+# 	print(g.commit_l[-1].subject)
+	g.print_commit_l_first_and_last()
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True, run_type = "call")
 	
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline > C:\Users\mt204e\Documents\projects\Bitbucket_repo_setup\svn_to_git_ip_repo\test_log.txt')

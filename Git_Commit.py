@@ -10,68 +10,74 @@ VAR_DELIM = '__$$@-VAR_DELIM-@$__'
 
 class Git_Commit:
     # run_git_cmd will execute the given command inside the repo that initialized the Git_Commit class
-    def __init__(self, abbreviated_commit_hash, run_git_cmd):
+    def __init__(self, abbreviated_commit_hash, run_git_cmd, data_tup = None):
         self.run_git_cmd      = run_git_cmd
         self.abrv_commit_hash = abbreviated_commit_hash
         
-        self.author          = None
-        self.author_date     = None
-        self.subject         = None
-        self.body            = None
+        self.author           = None
+        self.author_date      = None
+        self.subject          = None
+        self.body             = None
                            
-        self.changed_files_l = []
+        self.changed_files_l  = []
         
-        self.svn_rev_num     = None
+        self.svn_rev_num      = None
         
-#         self.log_commit_data('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\bitbucket_repo_setup_scripts\\test__commit_log.txt')
         
-#         self.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True) 
-
-        # build and run cmd to extract commit info
-        cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:"' + VAR_DELIM + clfs.AUTHOR_NAME \
-                                                                                      + VAR_DELIM + clfs.AUTHOR_DATE \
-                                                                                      + VAR_DELIM + clfs.SUBJECT     \
-                                                                                      + VAR_DELIM + clfs.BODY        \
-                                                                                + '"'
-                                                                                       
-        raw_commit_data = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
+        # if given data_tup from json log file, load vars from that,
+        # otherwise, build commit normally
+        if data_tup == None:
+            self.load_from_log_data(data_tup)
+        else:
         
-        if type(raw_commit_data) == list: # if someone used newlines in their commit body
-            raw_commit_data = ''.join(raw_commit_data)
+        
+    #         self.log_commit_data('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\bitbucket_repo_setup_scripts\\test__commit_log.txt')
             
-#         print(raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
-        commit_data_l = raw_commit_data.split(VAR_DELIM)
-        commit_data_l.pop(0) # remove first empty element
-
-        self.author      = commit_data_l.pop(0)                                          
-        self.author_date = commit_data_l.pop(0)                                          
-        self.subject     = commit_data_l.pop(0)                                          
-        self.body        = commit_data_l.pop(0)  
-        
-        print('  authord_date: ', self.author_date)              
-        
-        
-        # fill self.changed_files_l
-        cmd = 'git show --name-only ' + self.abrv_commit_hash
-        raw_commit_data_l = self.run_git_cmd(cmd     , decode = True, print_output = True, print_cmd = True)
- 
-        print(raw_commit_data_l)
-        print(raw_commit_data_l[1])
-         
-        for line in reversed(raw_commit_data_l):
-            print(line)
-            if line[0] == '\n':
-                break
+    #         self.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True) 
+    
+            # build and run cmd to extract commit info
+            cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:"' + VAR_DELIM + clfs.AUTHOR_NAME \
+                                                                                          + VAR_DELIM + clfs.AUTHOR_DATE \
+                                                                                          + VAR_DELIM + clfs.SUBJECT     \
+                                                                                          + VAR_DELIM + clfs.BODY        \
+                                                                                    + '"'
+                                                                                           
+            raw_commit_data = self.run_git_cmd(cmd     , decode = True)
+            
+            if type(raw_commit_data) == list: # if someone used newlines in their commit body
+                raw_commit_data = ''.join(raw_commit_data)
+                
+    #         print(raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+            commit_data_l = raw_commit_data.split(VAR_DELIM)
+            commit_data_l.pop(0) # remove first empty element
+    
+            self.author      = commit_data_l.pop(0)                                          
+            self.author_date = commit_data_l.pop(0)                                          
+            self.subject     = commit_data_l.pop(0)                                          
+            self.body        = commit_data_l.pop(0)  
+            
+            
+            
+            # fill self.changed_files_l
+            cmd = 'git show --name-only ' + self.abrv_commit_hash
+            raw_commit_data_l = self.run_git_cmd(cmd     , decode = True)
+     
+    #         print(raw_commit_data_l)#``````````````````````````````````````````````````````````````````````````````````````````````
+    #         print(raw_commit_data_l[1])#`````````````````````````````````````````````````````````````````````````````````````````````
              
-            self.changed_files_l.append(line[:-1]) # trim newline
-                         
-        self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
+            for line in reversed(raw_commit_data_l):
+                if line[0] == '\n':
+                    break
                  
-                                                                                          
-        # if this commit is from a git repo created by converting from an svn repo
-        if 'git-svn-id: ' in self.body:
-            self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
-            
+                self.changed_files_l.append(line[:-1]) # trim newline
+                             
+            self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
+                     
+                                                                                              
+            # if this commit is from a git repo created by converting from an svn repo
+            if 'git-svn-id: ' in self.body:
+                self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+                
        
         
     # if no log_file_path is given, will log to default location
@@ -94,12 +100,67 @@ class Git_Commit:
     
     
     
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Json Log Functions - For Testing
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    
+    def json_log_tup(self):
+        return (
+                self.author         ,
+                self.author_date    ,
+                self.subject        ,
+                self.body           ,
+                self.changed_files_l,
+                self.svn_rev_num    )
+        
+    def load_from_log_data(self, data_tup):
+        self.author         = data_tup.pop(0)
+        self.author_date    = data_tup.pop(0) 
+        self.subject        = data_tup.pop(0) 
+        self.body           = data_tup.pop(0) 
+        self.changed_files_ = data_tup.pop(0)
+        self.svn_rev_num    = data_tup.pop(0) 
+        
+    
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Misc. Testing Functions
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    def print_me(self):
+        print('Commit Print:  ', self.abrv_commit_hash, '  Subject: ', self.subject)
+        
+    
+        
+    
 if __name__ == "__main__":
     import Git_Repo
 #     Git_Repo.main()
     g = Git_Repo.Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
     g.build_commit_l()
 #     g.commit_l[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
