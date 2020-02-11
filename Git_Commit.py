@@ -70,11 +70,13 @@ class Git_Commit:
             cmd = 'git show --name-only ' + self.abrv_commit_hash
             raw_commit_data_l = self.run_git_cmd(cmd     , decode = True)
      
-    #         print(raw_commit_data_l)#``````````````````````````````````````````````````````````````````````````````````````````````
-    #         print(raw_commit_data_l[1])#`````````````````````````````````````````````````````````````````````````````````````````````
+            print(raw_commit_data_l)#``````````````````````````````````````````````````````````````````````````````````````````````
+            print(raw_commit_data_l[1])#`````````````````````````````````````````````````````````````````````````````````````````````
+            
+            
              
             for line in reversed(raw_commit_data_l):
-                if line[0] == '\n':
+                if line[0] == '\n' or line.startswith('   '):
                     break
                  
                 self.changed_files_l.append(line[:-1]) # trim newline
@@ -139,7 +141,7 @@ class Git_Commit:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     def print_me(self):
 #         print('Commit Print:  ', self.abrv_commit_hash, '  Subject: ', self.subject)
-        print('Commit print_me:  ', self.abrv_commit_hash)
+        print('Commit print_me:  '  , self.abrv_commit_hash)
         print('  author         :  ', self.author          )
         print('  author_date    :  ', self.author_date     )
         print('  subject        :  ', self.subject         )
@@ -152,11 +154,15 @@ class Git_Commit:
         
     
 if __name__ == "__main__":
-    import Git_Repo
-#     Git_Repo.main()
-    g = Git_Repo.Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
-    g.build_commit_l()
-#     g.commit_l[0]
+    import repo_transfer
+    repo_transfer.main()
+
+
+#     import Git_Repo
+# #     Git_Repo.main()
+#     g = Git_Repo.Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
+#     g.build_commit_l()
+# #     g.commit_l[0]
 
 
 

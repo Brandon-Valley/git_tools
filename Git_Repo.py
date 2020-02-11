@@ -185,7 +185,7 @@ class Git_Repo:
 		txt_logger.write([], out_file_path)
 		
 		for commit in self.commit_l:
-			txt_logger.write('------------------------', out_file_path)
+			txt_logger.write('\n----------------------------------------------------------------\n', out_file_path, write_mode = 'append')
 			cmd = 'git show --name-only ' + commit.abrv_commit_hash + ' >> ' + out_file_path
 # 			cmd = 'git show --name-only ' + commit.abrv_commit_hash
 			self.run_git_cmd(cmd, print_output = True, print_cmd = True, shell = True, decode = True)

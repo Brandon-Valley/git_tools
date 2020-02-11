@@ -1,0 +1,310 @@
+{
+    "axilite_adc122S706": {
+        "proj_name": "axilite_adc122S706",
+        "ver_str": "1.0"
+    },
+    "axilite_generic_pwm": {
+        "proj_name": "axilite_generic_pwm",
+        "ver_str": "1.0"
+    },
+    "axilite_ioc_pwm1.0": {
+        "proj_name": "axilite_ioc_pwm",
+        "ver_str": "1.0"
+    },
+    "axilite_LTC2666": {
+        "proj_name": "axilite_LTC2666",
+        "ver_str": "1.0"
+    },
+    "axilite_MK82_1.0": {
+        "proj_name": "axilite_MK82",
+        "ver_str": "1.0"
+    },
+    "axilite_regs_1.0": {
+        "proj_name": "axilite_regs",
+        "ver_str": "1.0"
+    },
+    "axilite_regs_1.1": {
+        "proj_name": "axilite_regs",
+        "ver_str": "1.1"
+    },
+    "axilite_regs_1.2": {
+        "proj_name": "axilite_regs",
+        "ver_str": "1.2"
+    },
+    "axilite_regs_1.3": {
+        "proj_name": "axilite_regs",
+        "ver_str": "1.3"
+    },
+    "axilite_rsc_adc": {
+        "proj_name": "axilite_rsc_adc",
+        "ver_str": "1.0"
+    },
+    "axi_1553_v2.0": {
+        "proj_name": "axi_1553",
+        "ver_str": "2.0"
+    },
+    "axi_1553_v2.1": {
+        "proj_name": "axi_1553",
+        "ver_str": "2.1"
+    },
+    "axi_1553_v2.2": {
+        "proj_name": "axi_1553",
+        "ver_str": "2.2"
+    },
+    "axi_1553_v2.3": {
+        "proj_name": "axi_1553",
+        "ver_str": "2.3"
+    },
+    "axi_ad5764_v0_1": {
+        "proj_name": "axi_ad5764",
+        "ver_str": "0.1"
+    },
+    "axi_ad7327_v0_1": {
+        "proj_name": "axi_ad7327",
+        "ver_str": "0.1"
+    },
+    "axi_ad768x_1.1": {
+        "proj_name": "axi_ad768x",
+        "ver_str": "1.1"
+    },
+    "axi_adis1647x_1.0": {
+        "proj_name": "axi_adis1647x",
+        "ver_str": "1.0"
+    },
+    "axi_adis1647x_1.1": {
+        "proj_name": "axi_adis1647x",
+        "ver_str": "1.1"
+    },
+    "axi_cas2xx_1.1": {
+        "proj_name": "axi_cas2xx",
+        "ver_str": "1.1"
+    },
+    "axi_dma_1.1": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.1"
+    },
+    "axi_dma_1.2": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.2"
+    },
+    "axi_dma_1.3": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.3"
+    },
+    "axi_dma_1.4": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.4"
+    },
+    "axi_dma_1.5": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.5"
+    },
+    "axi_dma_1.6": {
+        "proj_name": "axi_dma",
+        "ver_str": "1.6"
+    },
+    "axi_dma_sdlc_v0_3": {
+        "proj_name": "axi_dma_sdlc",
+        "ver_str": "0.3"
+    },
+    "axi_dma_sdlc_v0_5": {
+        "proj_name": "axi_dma_sdlc",
+        "ver_str": "0.5"
+    },
+    "AXI_DM_LineEncoder_v1_0": {
+        "proj_name": "AXI_DM_LineEncoder",
+        "ver_str": "1.0"
+    },
+    "AXI_DM_LineEncoder_v1_1": {
+        "proj_name": "AXI_DM_LineEncoder",
+        "ver_str": "1.1"
+    },
+    "axi_dm_uart_1.0": {
+        "proj_name": "axi_dm_uart",
+        "ver_str": "1.0"
+    },
+    "axi_dm_uart_1.1": {
+        "proj_name": "axi_dm_uart",
+        "ver_str": "1.1"
+    },
+    "axi_dm_uart_1.2": {
+        "proj_name": "axi_dm_uart",
+        "ver_str": "1.2"
+    },
+    "axi_general_purpose_regs_1.0": {
+        "proj_name": "axi_general_purpose_regs",
+        "ver_str": "1.0"
+    },
+    "axi_general_purpose_regs_1.1": {
+        "proj_name": "axi_general_purpose_regs",
+        "ver_str": "1.1"
+    },
+    "axi_global_regs_1.0": {
+        "proj_name": "axi_global_regs",
+        "ver_str": "1.0"
+    },
+    "axi_global_regs_1.1": {
+        "proj_name": "axi_global_regs",
+        "ver_str": "1.1"
+    },
+    "AXI_HI_8429_1.0": {
+        "proj_name": "AXI_HI_8429",
+        "ver_str": "1.0"
+    },
+    "AXI_HI_8429_1.1": {
+        "proj_name": "AXI_HI_8429",
+        "ver_str": "1.1"
+    },
+    "axi_hmc1043_1.1": {
+        "proj_name": "axi_hmc1043",
+        "ver_str": "1.1"
+    },
+    "axi_hx1_spi_1.0": {
+        "proj_name": "axi_hx1_spi",
+        "ver_str": "1.0"
+    },
+    "axi_hx1_spi_1.1": {
+        "proj_name": "axi_hx1_spi",
+        "ver_str": "1.1"
+    },
+    "axi_hx1_spi_1.2": {
+        "proj_name": "axi_hx1_spi",
+        "ver_str": "1.2"
+    },
+    "axi_hx1_spi_1.3": {
+        "proj_name": "axi_hx1_spi",
+        "ver_str": "1.3"
+    },
+    "axi_intr_cntl_1.1": {
+        "proj_name": "axi_intr_cntl",
+        "ver_str": "1.1"
+    },
+    "axi_intr_cntl_1.2": {
+        "proj_name": "axi_intr_cntl",
+        "ver_str": "1.2"
+    },
+    "axi_intr_cntl_1.3": {
+        "proj_name": "axi_intr_cntl",
+        "ver_str": "1.3"
+    },
+    "axi_intr_cntl_1.4": {
+        "proj_name": "axi_intr_cntl",
+        "ver_str": "1.4"
+    },
+    "axi_intr_cntl_1.5": {
+        "proj_name": "axi_intr_cntl",
+        "ver_str": "1.5"
+    },
+    "axi_local_timer_1.0": {
+        "proj_name": "axi_local_timer",
+        "ver_str": "1.0"
+    },
+    "axi_local_timer_1.1": {
+        "proj_name": "axi_local_timer",
+        "ver_str": "1.1"
+    },
+    "axi_local_timer_1.2": {
+        "proj_name": "axi_local_timer",
+        "ver_str": "1.2"
+    },
+    "axi_me_v1_0": {
+        "proj_name": "axi_me",
+        "ver_str": "1.0"
+    },
+    "axi_MinIM_1.0": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.0"
+    },
+    "axi_MinIM_1.1": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.1"
+    },
+    "axi_MinIM_1.2": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.2"
+    },
+    "axi_MinIM_1.3": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.3"
+    },
+    "axi_MinIM_1.4": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.4"
+    },
+    "axi_MinIM_1.5": {
+        "proj_name": "axi_MinIM",
+        "ver_str": "1.5"
+    },
+    "axi_pwm_1.0": {
+        "proj_name": "axi_pwm",
+        "ver_str": "1.0"
+    },
+    "axi_sdlc_1.1": {
+        "proj_name": "axi_sdlc",
+        "ver_str": "1.1"
+    },
+    "axi_sdlc_1.6": {
+        "proj_name": "axi_sdlc",
+        "ver_str": "1.6"
+    },
+    "axi_sdlc_v0_1": {
+        "proj_name": "axi_sdlc",
+        "ver_str": "0.1"
+    },
+    "axi_uart_1.1": {
+        "proj_name": "axi_uart",
+        "ver_str": "1.1"
+    },
+    "axi_uart_1.5": {
+        "proj_name": "axi_uart",
+        "ver_str": "1.5"
+    },
+    "axi_uart_1.8": {
+        "proj_name": "axi_uart",
+        "ver_str": "1.8"
+    },
+    "axi_uart_2.1": {
+        "proj_name": "axi_uart",
+        "ver_str": "2.1"
+    },
+    "axi_uart_2.2": {
+        "proj_name": "axi_uart",
+        "ver_str": "2.2"
+    },
+    "axi_uart_2.3": {
+        "proj_name": "axi_uart",
+        "ver_str": "2.3"
+    },
+    "axi_uart_2.4": {
+        "proj_name": "axi_uart",
+        "ver_str": "2.4"
+    },
+    "axi_uart_2.5": {
+        "proj_name": "axi_uart",
+        "ver_str": "2.5"
+    },
+    "Fast_Enet Support_1.0": {
+        "proj_name": "Fast_Enet_Support",
+        "ver_str": "1.0"
+    },
+    "Fast_Enet_Support_1_2": {
+        "proj_name": "Fast_Enet_Support",
+        "ver_str": "1.2"
+    },
+    "I2C_SingMaster": {
+        "proj_name": "I2C_SingMaster",
+        "ver_str": "1.0"
+    },
+    "MAX6627": {
+        "proj_name": "MAX6627",
+        "ver_str": "1.0"
+    },
+    "mock_axi_AD7327": {
+        "proj_name": "mock_axi_AD7327",
+        "ver_str": "1.0"
+    },
+    "rcw_spi_if": {
+        "proj_name": "rcw_spi_if",
+        "ver_str": "1.0"
+    }
+}
