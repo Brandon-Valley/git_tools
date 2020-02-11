@@ -8,6 +8,7 @@ import Git_Commit
 
 # to import from parent dir
 import sys, os
+from Tools.scripts.find_recursionlimit import limit
 sys.path.insert(1, os.path.join(sys.path[0], '..\\..')) 
 
 # from parent dir
@@ -21,7 +22,6 @@ COMMIT_L_LOG_JSON_FILE_PATH = 'commit_l.json'
 LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS = False
 LOG_COMMIT_L = False
 
-LIMITED_COMMIT_L_LOAD = True
 	
 	
 def cd(dir_path):
@@ -131,7 +131,7 @@ class Git_Repo:
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 
 	# takes about 40 sec for ip_repo with no prints
-	def build_commit_l(self): 
+	def build_commit_l(self, limited_load = False): 
 		
 		if LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS and fsu.is_file(COMMIT_L_LOG_JSON_FILE_PATH):
 			print('Loading commit_l from log file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
@@ -140,7 +140,7 @@ class Git_Repo:
 			abrv_commit_hash_l = self.get_abrv_commit_hash_l()
 
 
-			if LIMITED_COMMIT_L_LOAD:
+			if limited_load:
 				print('Building commit_l - LIMITED LOAD...')
 				for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
 					c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
@@ -325,7 +325,7 @@ def main():
 
 	g = Git_Repo("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\ip_repo")
 # 	g.run_git_cmd('git log 34f2fab -n1 --oneline --pretty=format:" %n---------%n H   commit hash: ', print_output = True, print_cmd = True)
-	g.build_commit_l()
+	g.build_commit_l(limited_load = True)
 	
 # 	print(g.commit_l[-1].subject)
 	g.print_commit_l_first_and_last()
