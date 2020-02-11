@@ -18,8 +18,10 @@ from submodules.file_system_utils import  file_system_utils as fsu
 	
 	
 COMMIT_L_LOG_JSON_FILE_PATH = 'commit_l.json'
-LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS = True
-LOG_COMMIT_L = True
+LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS = False
+LOG_COMMIT_L = False
+
+LIMITED_COMMIT_L_LOAD = True
 	
 	
 def cd(dir_path):
@@ -135,18 +137,27 @@ class Git_Repo:
 			print('Loading commit_l from log file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
 			self.load_commit_l_from_log()
 		else:
-		
-			print('building commit_l...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
 			abrv_commit_hash_l = self.get_abrv_commit_hash_l()
-			for abiv_commit_hash in abrv_commit_hash_l:
-				c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
-				self.commit_l.append(c)
-	
-			print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
-			
-			if LOG_COMMIT_L:
-				print('Logging newly created commit_l to json file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
-				self.log_commit_l()
+
+
+			if LIMITED_COMMIT_L_LOAD:
+				print('Building commit_l - LIMITED LOAD...')
+				for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
+					c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+					self.commit_l.append(c)
+					
+			else:
+		
+				print('Building commit_l normally...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+				for abiv_commit_hash in abrv_commit_hash_l:
+					c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+					self.commit_l.append(c)
+		
+				print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
+				
+				if LOG_COMMIT_L:
+					print('Logging newly created commit_l to json file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
+					self.log_commit_l()
 
 
 
@@ -188,6 +199,7 @@ class Git_Repo:
 	def print_commit_l_first_and_last(self):
 		self.commit_l[0].print_me()
 		self.commit_l[-1].print_me()
+		print('size of self.commit_l:  ', len(self.commit_l))
 		
 
 

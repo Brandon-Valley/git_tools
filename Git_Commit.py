@@ -26,7 +26,7 @@ class Git_Commit:
         
         # if given data_tup from json log file, load vars from that,
         # otherwise, build commit normally
-        if data_tup == None:
+        if data_tup != None:
             self.load_from_log_data(data_tup)
         else:
         
