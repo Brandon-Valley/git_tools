@@ -82,7 +82,6 @@ class Git_Repo:
 	def merge_no_ff          (self, branch_name, print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name , print_output
 																																				, print_cmd
 																																				, sleep = 0.5) # not optimized
-
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
 	'''                                                                           
 	        Basic Commands - No Args
@@ -94,6 +93,8 @@ class Git_Repo:
 	def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'           , print_output
 																												   , print_cmd)
 	def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'      , print_output
+																												   , print_cmd)
+	def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'        , print_output
 																												   , print_cmd)
 
 	''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
