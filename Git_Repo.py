@@ -2,13 +2,15 @@ import ntpath
 import time
 
 
-import Git_Commit
-
+try:
+    # for eclipse code-completion 
+    from submodules.git_tools import Git_Commit
+except:
+    import Git_Commit
 
 
 # to import from parent dir
 import sys, os
-from Tools.scripts.find_recursionlimit import limit
 sys.path.insert(1, os.path.join(sys.path[0], '..\\..')) 
 
 # from parent dir
