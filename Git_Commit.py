@@ -139,15 +139,18 @@ class Git_Commit:
             Misc. Testing Functions
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
-    def print_me(self):
-#         print('Commit Print:  ', self.abrv_commit_hash, '  Subject: ', self.subject)
-        print('Commit print_me:  '  , self.abrv_commit_hash)
-        print('  author         :  ', self.author          )
-        print('  author_date    :  ', self.author_date     )
-        print('  subject        :  ', self.subject         )
-        print('  body           :  ', self.body            )
-        print('  changed_files_l:  ', self.changed_files_l )
-        print('  svn_rev_num    :  ', self.svn_rev_num     )
+    def print_me(self, oneline = False):
+        if oneline == True:
+            print('Commit print_me:  '  , self.abrv_commit_hash, '  Subject:  ', self.subject         )
+        else:
+            print('Commit print_me:  '  , self.abrv_commit_hash)
+            print('  author         :  ', self.author          )
+            print('  author_date    :  ', self.author_date     )
+            print('  subject        :  ', self.subject         )
+            print('  body           :  ', self.body            )
+            print('  changed_files_l:  ', self.changed_files_l )
+            print('  svn_rev_num    :  ', self.svn_rev_num     )
+        
 
         
     
