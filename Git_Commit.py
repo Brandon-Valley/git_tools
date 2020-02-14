@@ -55,7 +55,7 @@ class Git_Commit:
             if type(raw_commit_data) == list: # if someone used newlines in their commit body
                 raw_commit_data = ''.join(raw_commit_data)
                 
-            print('raw_commit_data: ', raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+#             print('raw_commit_data: ', raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
             commit_data_l = raw_commit_data.split(VAR_DELIM)
             commit_data_l.pop(0) # remove first empty element
     
