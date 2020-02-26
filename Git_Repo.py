@@ -53,7 +53,7 @@ class Git_Repo:
 	
 	def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False):
 # 		if run_type not in ['popen']
-		eu.error_if_param_invalid(run_type, ['popen', 'call'])
+		eu.error_if_param_key_not_in_whitelist(run_type, ['popen', 'call'])
 		
 		og_cwd = os.getcwd()
 		cd(self.path)
