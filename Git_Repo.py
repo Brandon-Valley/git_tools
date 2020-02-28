@@ -209,7 +209,7 @@ class Git_Repo:
             if limited_load:
                 print('Building commit_l - LIMITED LOAD...')
     #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
-                for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-11:] + abrv_commit_hash_l[-5:]):
+                for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + abrv_commit_hash_l[-2:]):
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                     
@@ -246,7 +246,6 @@ class Git_Repo:
             self.run_git_cmd(cmd, print_output = True, print_cmd = True, shell = True, decode = True)
             
     
-    
     # logs self.commit_l into a json file that can be loaded back in to avoid
     # waiting 40 seconds to build it each time for testing
     def log_commit_l(self):
@@ -256,6 +255,7 @@ class Git_Repo:
             log_l.append(commit.json_log_tup())
             
         json_logger.write(log_l, COMMIT_L_LOG_JSON_FILE_PATH)
+        
         
     def load_commit_l_from_log(self):
         commit_data_l = json_logger.read(COMMIT_L_LOG_JSON_FILE_PATH)
@@ -278,10 +278,10 @@ class Git_Repo:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     def get_submodule_path_l(self):
         sm_path_l = []
-        
+         
         for sm_repo in self.submodule_l:
             sm_path_l.append(sm_repo.path)
-            
+             
         return sm_path_l
             
         
