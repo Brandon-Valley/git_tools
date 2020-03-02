@@ -64,7 +64,7 @@ class Git_Repo:
         if run_type == 'popen':
             output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode)
         elif run_type == 'call':
-            output = su.run_cmd_call (cmd, print_cmd, shell, decode)
+            output = su.run_cmd_call (cmd, print_cmd, shell)
         
         if sleep > 0:
             if print_output:
@@ -75,9 +75,23 @@ class Git_Repo:
         
         
         return output
-            
     
     
+
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Basic Commands - No Args
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    
+    def flow_init_default (self, print_output = False, print_cmd = False):  self.run_git_cmd('git flow init -d -f', print_output
+                                                                                                                  , print_cmd)
+    def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'          , print_output
+                                                                                                                  , print_cmd)
+    def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'     , print_output
+                                                                                                                  , print_cmd)
+    def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'       , print_output
+                                                                                                                  , print_cmd)    
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -85,35 +99,38 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     
-    def commit_simple        (self, msg        , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'   , print_output
-                                                                                                                                                   , print_cmd)
-    def checkout_simple      (self, branch_name, print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name      , print_output
-                                                                                                                                                , print_cmd)
+    def commit_simple         (self, msg                , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'       , print_output
+                                                                                                                                                             , print_cmd)
+    def checkout_simple       (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name          , print_output
+                                                                                                                                                             , print_cmd)
     # adds repo at the given URL as a submodule of this repo
-    def add_submodule_simple (self, repo_url   , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url     , print_output
-                                                                                                                                                , print_cmd)
-    # merges given branch name into current branch without fast-forwarding
-    def merge_no_ff          (self, branch_name, print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name , print_output
-                                                                                                                                                , print_cmd
-                                                                                                                                                , sleep = 0.5) # not optimized
+    def add_submodule_simple  (self, repo_url           , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
+                                                                                                                                                             , print_cmd)
+    # merges given branch name into current branch without fast-forwarding 
+    def merge_no_ff           (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
+                                                                                                                                                             , print_cmd
+                                                                                                                                                             , sleep = 0.5) # not optimized    
+    def delete_commit_history (self, push_changes = True, print_output = False, print_cmd = False):  
+                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout 
+                                                                                                    self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
+                                                                                                    self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+                                                                                                    self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
+                                                                                                    self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
+                                                                                                    if push_changes:
+                                                                                                        self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
-            Basic Commands - No Args
+            Basic Commands - Many Args
     '''
-    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
-    
-    def flow_init_default (self, print_output = False, print_cmd = False):  self.run_git_cmd('git flow init -d -f' , print_output
-                                                                                                                   , print_cmd)
-    def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'           , print_output
-                                                                                                                   , print_cmd)
-    def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'      , print_output
-                                                                                                                   , print_cmd)
-    def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'        , print_output
-                                                                                                                   , print_cmd)
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
+    def commit_full(self, msg, author, date, print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg 
+                                                                                                         + ' --author='  + author 
+                                                                                                         + ' --date='    + date
+                                                                                                         + '"'                                  , print_output, print_cmd)
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
-            Integrated Commands - Execute and Modify Self
+            Class Commands - Takes Git_Repo and/or Git_Commit as params
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     
@@ -133,11 +150,21 @@ class Git_Repo:
     #     add_all(top_lvl_repo_path)
     #     commit_msg = "Initialized repository as submodule:  " + ntpath.basename(submodule_repo_path)
     #     commit(top_lvl_repo_path, commit_msg)
+    
+    def commit_current_changes_with_commit_meta_data(self, commit, print_output, print_cmd):
+        self.add_all_files(print_output, print_cmd)
+        self.commit_full(msg = commit.subject + '/n' + commit.body,
+                         author = commit.author,
+                         date = commit.author_date,
+                         print_output = print_output,
+                         print_cmd = print_cmd)
         
-        
-        
-        
-        
+        print('in Git_Repo, logging commit info of first commit  REMOVE THIS VVVVVVVVVV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        time.sleep(1)#````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````)
+        self.build_commit_l()
+        print('out of build_commit_l')
+        self.commit_l[-1].log_commit_data("C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\\test_log.txt")
+#         
         
         
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -157,6 +184,10 @@ class Git_Repo:
     # most recent commit at position 0
     def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
         raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output , print_cmd, decode = True)
+        
+        if isinstance(raw_l, str):
+            raw_l = [raw_l]
+        
         
         abrv_commit_hash_l = []
         
@@ -209,13 +240,17 @@ class Git_Repo:
             if limited_load:
                 print('Building commit_l - LIMITED LOAD...')
     #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
-                for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + abrv_commit_hash_l[-2:]):
+                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l))#``````````````````````````````````````````````````````````````````````````````````````````````````````
+#                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
+                for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                     
             else:
         
                 print('Building commit_l normally...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+                print(' in git repo, building commit_l, abrv_commit_hash_l', abrv_commit_hash_l)#`````````````````````````````````````````````````````````````````
+                
                 for abiv_commit_hash in abrv_commit_hash_l:
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
