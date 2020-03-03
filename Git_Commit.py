@@ -23,6 +23,7 @@ class Git_Commit:
         self.abrv_commit_hash = abbreviated_commit_hash
         
         self.author           = None
+        self.author_email     = None
         self.author_date      = None
         self.subject          = None
         self.body             = None
@@ -45,6 +46,7 @@ class Git_Commit:
     
             # build and run cmd to extract commit info
             cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:"' + VAR_DELIM + clfs.AUTHOR_NAME \
+                                                                                          + VAR_DELIM + clfs.AUTHOR_EMAIL \
                                                                                           + VAR_DELIM + clfs.AUTHOR_DATE \
                                                                                           + VAR_DELIM + clfs.SUBJECT     \
                                                                                           + VAR_DELIM + clfs.BODY        \
@@ -60,10 +62,11 @@ class Git_Commit:
             commit_data_l = raw_commit_data.split(VAR_DELIM)
             commit_data_l.pop(0) # remove first empty element
     
-            self.author      = commit_data_l.pop(0)                                          
-            self.author_date = commit_data_l.pop(0)                                          
-            self.subject     = commit_data_l.pop(0)                                          
-            self.body        = commit_data_l.pop(0)  
+            self.author       = commit_data_l.pop(0)                                          
+            self.author_email = commit_data_l.pop(0)                                          
+            self.author_date  = commit_data_l.pop(0)                                          
+            self.subject      = commit_data_l.pop(0)                                          
+            self.body         = commit_data_l.pop(0)  
             
             
             
@@ -146,6 +149,7 @@ class Git_Commit:
         else:
             print('Commit print_me:  '  , self.abrv_commit_hash)
             print('  author         :  ', self.author          )
+            print('  author_email   :  ', self.author_email    )
             print('  author_date    :  ', self.author_date     )
             print('  subject        :  ', self.subject         )
             print('  body           :  ', self.body            )

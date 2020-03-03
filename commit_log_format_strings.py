@@ -17,7 +17,8 @@ AUTHOR_NAME = '%an'
 # ---------                                                                                                                 
 #  aN   author name (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                               Rosa(US), Matthew W 
 # ---------                                                                                                                 
-#  ae   author email:                                                                                                         matthew.w.rosa@boeing.com 
+#  ae   author email:                                                                                                         matthew.w.rosa@boeing.com
+AUTHOR_EMAIL = '%ae' 
 # ---------                                                                                                                 
 #  aE   author email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                              matthew.w.rosa@boeing.com 
 # ---------                                                                                                                 

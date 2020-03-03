@@ -123,10 +123,10 @@ class Git_Repo:
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
-    def commit_full(self, msg, author, date, print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg 
-                                                                                                         + ' --author='  + author 
-                                                                                                         + ' --date='    + date
-                                                                                                         + '"'                                  , print_output, print_cmd)
+    def commit_full(self, msg, author, date, print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg    + '"'
+                                                                                                         + ' --author="'      + author + '"'
+                                                                                                         + ' --date="'        + date   + '"'
+                                                                                                         , print_output, print_cmd)
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -483,8 +483,8 @@ def main():
     
     
 if __name__ == '__main__':
-#     import repo_transfer
-#     repo_transfer.main()
+    import repo_transfer
+    repo_transfer.main()
     
 
 #     r = Git_Repo("C:\\Users\\mt204e\\Documents\    est\\git_test\    r0")
@@ -493,7 +493,7 @@ if __name__ == '__main__':
 #     r = Git_Repo("C:\\Users\\mt204e\\Documents\    est")
 #     print(r.exists())
 
-    main()
+#     main()
     
     # git commit --allow-empty -m "manual first commit from cmd line"
     
