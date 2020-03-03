@@ -20,15 +20,13 @@ if util_submodule_import_check_count != len(util_submodule_l)    :    raise Exce
 
 
 
+import commit_log_format_strings as clfs
 
-try:
-    # for eclipse code-completion 
-    from submodules.git_tools import commit_log_format_strings as clfs
-except:
-    import commit_log_format_strings as clfs
 
 
 VAR_DELIM = '__$$@-VAR_DELIM-@$__'
+
+
 
 class Git_Commit:
     # run_git_cmd will execute the given command inside the repo that initialized the Git_Commit class
