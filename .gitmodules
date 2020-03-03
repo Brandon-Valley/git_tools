@@ -1,0 +1,3 @@
+[submodule "util_submodules__gu/subprocess_utils"]
+	path = util_submodules__gu/subprocess_utils
+	url = https://github.com/Brandon-Valley/subprocess_utils.git
