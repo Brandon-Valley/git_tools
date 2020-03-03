@@ -38,7 +38,6 @@ sys.path.insert(1, os.path.join(sys.path[0], '..\\..'))
 # fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # from parent dir
 from submodules.exception_utils import exception_utils as eu
-from submodules.subprocess_utils import subprocess_utils as su
 from submodules.logger import json_logger, txt_logger
 from submodules.file_system_utils import  file_system_utils as fsu
     
