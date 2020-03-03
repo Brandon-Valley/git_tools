@@ -18,14 +18,28 @@ from util_submodules__gu.subprocess_utils import subprocess_utils as su    ; uti
 if util_submodule_import_check_count != len(util_submodule_l)    :    raise Exception("ERROR:  You probably added a local util_submodule import without adding it to the util_submodule_l")
 ''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 
-def get_username(print_output = False, print_cmd = False):
+def get_user_name(print_output = False, print_cmd = False):
     cmd = 'git config user.name'
     return su.run_cmd_popen(cmd, print_output, print_cmd, decode = True)
 
 
-def set_username(new_username, print_output = False, print_cmd = False):
-    cmd = 'git config user.name="' + new_username + '"'
+def get_user_email(print_output = False, print_cmd = False):
+    cmd = 'git config user.email'
+    return su.run_cmd_popen(cmd, print_output, print_cmd, decode = True)
+
+
+def set_user_name(new_user_name, print_output = False, print_cmd = False):
+    cmd = 'git config user.name="' + new_user_name + '"'
     su.run_cmd_popen(cmd, print_output, print_cmd)
+    
+
+def set_user_email(new_user_email, print_output = False, print_cmd = False):
+    cmd = 'git config user.email="' + new_user_email + '"'
+    su.run_cmd_popen(cmd, print_output, print_cmd)
+    
+    
+    
+    
     
     
 ''' -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- All Utilities Standard Footer -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- '''
