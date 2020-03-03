@@ -497,7 +497,9 @@ def main():
 # # #     os.system('git log 34f2fab -n1 --oneline --pretty=format:"COMMIT_HASH:\n\n\n %h  BODY: %b  COMMIT_NOTES: %n SUBJECT: %s  AUTHOR_DATE: %ad" > "C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\svn_to_git_ip_repo\    est_log.txt"' )
 # #     
     
-    
+''' -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- All Utilities Standard Footer -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- '''
+sys.modules = og_sys_modules
+''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 if __name__ == '__main__':
     import repo_transfer
     repo_transfer.main()
