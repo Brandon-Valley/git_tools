@@ -158,7 +158,7 @@ class Git_Repo:
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
-    def commit_full(self, msg, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
+    def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
         
 #         self.run_git_cmd('git -c user.name="'  + committer_name  + '"'
 #                           + ' -c user.email="' + committer_email + '"'
@@ -182,7 +182,8 @@ class Git_Repo:
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' commit '
                                      + ' --date="'            + date            + '"'
-                                     + ' -m "'                + msg             + '"'
+                                     + ' -m "'                + subject         + '"'
+                                     + ' -m "'                + body            + '"'
 #                                      + ' --author="'          + author          + '"'
                                      , print_output, print_cmd)
 #         
