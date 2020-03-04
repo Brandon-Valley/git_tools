@@ -136,6 +136,21 @@ class Git_Repo:
                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
                                                                                                     if push_changes:
                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
+                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+                                                                                                    
+                                                                                                    
+                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+#                                                                                                     time.sleep(1) # not optimized
+                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
+                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
+                                                                                                    self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
+                                                                                                    self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+
+                                                                                                    self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
+                                                                                                    self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
+                                                                                                    if push_changes:
+                                                                                                        self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
 
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
