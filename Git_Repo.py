@@ -125,27 +125,54 @@ class Git_Repo:
                                                                                                                                                              , sleep = 0.5) # not optimized    
     def delete_commit_history (self, push_changes = True, print_output = False, print_cmd = False):  
                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout 
+#                                                                                                     time.sleep(1) # not optimized
+                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
+                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
                                                                                                     self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
                                                                                                     self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+
                                                                                                     self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete the branch
                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
                                                                                                     if push_changes:
                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
+                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
+
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
-    def commit_full(self, msg, author, date, committer_name, committer_email, print_output = False, print_cmd = False):  
+    def commit_full(self, msg, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
         
-        self.run_git_cmd('git -c user.name="'  + committer_name  + '"'
-                          + ' -c user.email="' + committer_email + '"'
-                          + ' commit -m "'     + msg             + '"'
-                          + ' --author="'      + author          + '"'
-                          + ' --date="'        + date            + '"'
-                          , print_output, print_cmd)
+#         self.run_git_cmd('git -c user.name="'  + committer_name  + '"'
+#                           + ' -c user.email="' + committer_email + '"'
+#                           + ' commit -m "'     + msg             + '"'
+#                           + ' --author="'      + author          + '"'
+#                           + ' --date="'        + date            + '"'
+#                           , print_output, print_cmd)
+#         
+#         if committer_date_is_author_date:
+# #             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
+#         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+#                                      + ' git -c user.name="'  + committer_name  + '"'
+#                                      + ' -c user.email="'     + committer_email + '"'
+#                                      + ' commit -m "'         + msg             + '"'
+#                                      + ' --author="'          + author          + '"'
+#                                      + ' --date="'            + date            + '"'
+#                                      , print_output, print_cmd)
+#             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
+        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+                                     + ' git -c user.name="'  + committer_name  + '"'
+                                     + ' -c user.email="'     + committer_email + '"'
+                                     + ' commit '
+                                     + ' --date="'            + date            + '"'
+                                     + ' -m "'                + msg             + '"'
+#                                      + ' --author="'          + author          + '"'
+                                     , print_output, print_cmd)
+#         
+#         if committer_date_is_author_date:
+#             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -261,7 +288,9 @@ class Git_Repo:
     #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
                 print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l))#``````````````````````````````````````````````````````````````````````````````````````````````````````
 #                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
-                for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
+#                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
+#                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
+                for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]):
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                     
