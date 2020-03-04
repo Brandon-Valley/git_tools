@@ -159,24 +159,7 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
-        
-#         self.run_git_cmd('git -c user.name="'  + committer_name  + '"'
-#                           + ' -c user.email="' + committer_email + '"'
-#                           + ' commit -m "'     + msg             + '"'
-#                           + ' --author="'      + author          + '"'
-#                           + ' --date="'        + date            + '"'
-#                           , print_output, print_cmd)
-#         
-#         if committer_date_is_author_date:
-# #             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
-#         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
-#                                      + ' git -c user.name="'  + committer_name  + '"'
-#                                      + ' -c user.email="'     + committer_email + '"'
-#                                      + ' commit -m "'         + msg             + '"'
-#                                      + ' --author="'          + author          + '"'
-#                                      + ' --date="'            + date            + '"'
-#                                      , print_output, print_cmd)
-#             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
+
         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
@@ -184,11 +167,8 @@ class Git_Repo:
                                      + ' --date="'            + date            + '"'
                                      + ' -m "'                + subject         + '"'
                                      + ' -m "'                + body            + '"'
-#                                      + ' --author="'          + author          + '"'
                                      , print_output, print_cmd)
-#         
-#         if committer_date_is_author_date:
-#             self.run_git_cmd('git rebase --committer-date-is-author-date', print_output, print_cmd)
+
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
