@@ -59,6 +59,8 @@ class Git_Repo:
         self.commit_l    = []
         self.url         = None
         self.submodule_l = []
+        
+        self.flow_init__manual_flag = False # set true by flow_init_default(), will not detect if git flow is initialized elsewhere
     
         if remote_base_url != None:
             self.url = remote_base_url + '//' + self.name
@@ -97,14 +99,22 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     
-    def flow_init_default (self, print_output = False, print_cmd = False):  self.run_git_cmd('git flow init -d -f', print_output
-                                                                                                                  , print_cmd)
     def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'          , print_output
                                                                                                                   , print_cmd)
     def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'     , print_output
                                                                                                                   , print_cmd)
     def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'       , print_output
                                                                                                                   , print_cmd)    
+    def init_repo_simple  (self, print_output = False, print_cmd = False):  
+                                                                            fsu.make_dir_if_not_exist(self.path)
+                                                                            self.run_git_cmd('git init'           , print_output
+                                                                                                                  , print_cmd)   
+                            
+    
+    def flow_init_default (self, print_output = False, print_cmd = False):  
+                                                                            self.run_git_cmd('git flow init -d -f', print_output
+                                                                                                                  , print_cmd)
+                                                                            self.flow_init__manual_flag = True
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -124,40 +134,47 @@ class Git_Repo:
                                                                                                                                                              , print_cmd
                                                                                                                                                              , sleep = 0.5) # not optimized    
     def delete_commit_history (self, push_changes = True, print_output = False, print_cmd = False):  
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-#                                                                                                     time.sleep(1) # not optimized
-                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
-                                                                                                    self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
-                                                                                                    self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
 #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-
-                                                                                                    self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
-                                                                                                    self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
-                                                                                                    if push_changes:
-                                                                                                        self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-                                                                                                    
-                                                                                                    
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-#                                                                                                     time.sleep(1) # not optimized
-                                                                                                    self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
-                                                                                                    self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
-                                                                                                    self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+# #                                                                                                     time.sleep(1) # not optimized
+#                                                                                                     self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
+#                                                                                                     self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
+#                                                                                                     self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+# #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+# 
+#                                                                                                     self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
+#                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
+#                                                                                                     if push_changes:
+#                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
 #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-
-                                                                                                    self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
-                                                                                                    self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
-                                                                                                    if push_changes:
-                                                                                                        self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
-                                                                                                    self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
+#                                                                                                     
+#                                                                                                     
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+# #                                                                                                     time.sleep(1) # not optimized
+#                                                                                                     self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
+#                                                                                                     self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
+#                                                                                                     self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
+# #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+# 
+#                                                                                                     self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
+#                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
+#                                                                                                     if push_changes:
+#                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
+#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
+        print('pretending to delete commit history!!!')
 
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
+        
+    # remote name should be something like "origin"        
+    def add_remote  (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add' + remote_name + ' ' + remote_url , print_output
+                                                                                                                                                                  , print_cmd)
+    
+        
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
 
         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
@@ -286,7 +303,8 @@ class Git_Repo:
 #                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
-                for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]):
+#                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
+                for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]]): # axi_MinIM_1.1 -> 1.2
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                     
