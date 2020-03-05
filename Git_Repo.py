@@ -129,6 +129,8 @@ class Git_Repo:
     # adds repo at the given URL as a submodule of this repo
     def add_submodule_simple  (self, repo_url           , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
                                                                                                                                                              , print_cmd)
+    def flow_release_start    (self, version_str        , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str, print_output
+                                                                                                                                                             , print_cmd)
     # merges given branch name into current branch without fast-forwarding 
     def merge_no_ff           (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
                                                                                                                                                              , print_cmd
@@ -171,8 +173,10 @@ class Git_Repo:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
         
     # remote name should be something like "origin"        
-    def add_remote  (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add' + remote_name + ' ' + remote_url , print_output
-                                                                                                                                                                  , print_cmd)
+    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add' + remote_name + ' ' + remote_url                         , print_output
+                                                                                                                                                                                                  , print_cmd)
+    def flow_release_finish (self, version_str, tag_msg   , print_output = False, print_cmd = False):  self.run_git_cmd("git flow release finish '" + version_str + "' -m " + '"' + tag_msg + '"' , print_output
+                                                                                                                                                                                                  , print_cmd)
     
         
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
