@@ -122,49 +122,21 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
-    def commit_simple         (self, msg                , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'       , print_output
-                                                                                                                                                             , print_cmd)
-    def checkout_simple       (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name          , print_output
+    def commit_simple         (self, msg         , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'       , print_output
+                                                                                                                                                      , print_cmd)
+    def checkout_simple       (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name          , print_output
                                                                                                                                                              , print_cmd)
     # adds repo at the given URL as a submodule of this repo
-    def add_submodule_simple  (self, repo_url           , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
-                                                                                                                                                             , print_cmd)
-    def flow_release_start    (self, version_str        , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str, print_output
-                                                                                                                                                             , print_cmd)
+    def add_submodule_simple  (self, repo_url    , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
+                                                                                                                                                      , print_cmd)
+    def flow_release_start    (self, version_str , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str, print_output
+                                                                                                                                                      , print_cmd)
+    def delete_tag            (self, tag_name    , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name               , print_output
+                                                                                                                                                      , print_cmd)
     # merges given branch name into current branch without fast-forwarding 
-    def merge_no_ff           (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
+    def merge_no_ff           (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
                                                                                                                                                              , print_cmd
                                                                                                                                                              , sleep = 0.5) # not optimized    
-    def delete_commit_history (self, push_changes = True, print_output = False, print_cmd = False):  
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-# #                                                                                                     time.sleep(1) # not optimized
-#                                                                                                     self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
-#                                                                                                     self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
-#                                                                                                     self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
-# #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-# 
-#                                                                                                     self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
-#                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
-#                                                                                                     if push_changes:
-#                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-#                                                                                                     
-#                                                                                                     
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-# #                                                                                                     time.sleep(1) # not optimized
-#                                                                                                     self.run_git_cmd('git checkout --orphan latest_branch'   , print_output, print_cmd) # Checkout
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches 
-#                                                                                                     self.run_git_cmd('git add -A'                            , print_output, print_cmd) # Add all the files
-#                                                                                                     self.run_git_cmd('git commit -am "about to del history"' , print_output, print_cmd) # Commit the changes
-# #                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-# 
-#                                                                                                     self.run_git_cmd('git branch -D master'                  , print_output, print_cmd) # Delete the branch
-#                                                                                                     self.run_git_cmd('git branch -m master'                  , print_output, print_cmd) # Rename the current branch to master
-#                                                                                                     if push_changes:
-#                                                                                                         self.run_git_cmd('git push -f origin master'         , print_output, print_cmd) # Finally, force update your repository
-#                                                                                                     self.run_git_cmd("git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D", print_output, print_cmd) # Delete all branches
-        print('pretending to delete commit history!!!')
  
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -277,9 +249,13 @@ class Git_Repo:
         return repo_exists
      
      
-    def get_tag_l(self, print_output, print_cmd):
+    def get_tag_l(self, print_output = False, print_cmd = False):
         cmd = 'git tag'
-        return self.run_git_cmd(cmd, print_output, print_cmd, decode = True, strip = True)
+        tag_l = self.run_git_cmd(cmd, print_output, print_cmd, decode = True, strip = True)
+        
+        if tag_l == None:
+            return []
+        return tag_l
              
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -406,130 +382,20 @@ class Git_Repo:
         self.commit_l[-1].print_me()
         print('size of self.commit_l:  ', len(self.commit_l))
          
-     
-         
- 
- 
-#         from submodules.logger import json_logger
-#         json_logger.write(self.commit_l, 'test_commit_l.json')
-         
- 
-#     def init_commit(self, abrv_commit_hash):
- 
- 
- 
- 
-# 
-# 
-# def run_git_cmd(repo_path, cmd, print_output = False, print_cmd = False):
-#     cd(repo_path)
-#     run_cmd(cmd, print_output, print_cmd)
-#     
-#     
-#     
-#     
-#     
-# def commit(repo_path, msg, options_str = ''):
-#     # options_str = ''
-#     # for option in option_l:
-#         # options_str += ' ' + option + ' '
-#         
-#     cd(repo_path)
-#     cmd = 'git commit ' + options_str + ' -m "' + msg + '"'
-#     # cmd_out = subprocess.check_output(cmd, shell = False)
-#     # print(cmd_out)
-#     
-#     run_cmd(cmd, print_output = True)
-#     
-#     
-# def add(repo_path, options_str = ''):
-#     cd(repo_path)
-#     cmd = 'git add ' + options_str
-#     # cmd_out = subprocess.check_output(cmd, shell = False)
-#     # print(cmd_out)
-#     
-#     run_cmd(cmd, print_output = True)
-#     
-#     
-# 
-#     
-# '''
-# # adds and commits all files in existing repo at repo_path with given msg
-# def commit_all_files(repo_path, msg):
-#     cd(repo_path)
-#     cmd = 'git add .'
-#     print(subprocess.check_output(cmd, shell = False))
-#     
-#     cmd = 'git commit -m "' + msg + '"'
-#     print(subprocess.check_output(cmd, shell = False))
-# '''
-#     
-# # adds the existing repo at submodule_repo_url as a submodule of the existing repo at top_lvl_repo_path
-# # submodule repo must have at least one commit (does not need to have been pushed)
-# def add_submodule(top_lvl_repo_path, submodule_repo_url):
-#     cd(top_lvl_repo_path)
-#     # print('\n  in git_utils, in ' , top_lvl_repo_path, '  ,about to add submodule... \n')#`````````````````````````````````````````````````
-#     cmd = 'git submodule add ' + submodule_repo_url
-#     # print(cmd)
-#     # print(subprocess.check_output(cmd))
-#     run_cmd(cmd, print_output = True)
-#     
-#     
-# def add_branch(repo_path, branch_name):
-#     cd(repo_path)
-#     cmd = 'git branch ' + branch_name
-#     run_cmd(cmd, print_output = True, print_cmd = True)
-#     
-#     
-# def checkout_branch(repo_path, branch_name):
-#     cd(repo_path)
-#     cmd = 'git checkout ' + branch_name
-#     run_cmd(cmd, print_output = True, print_cmd = True)
-#     
-# # merges the branch you are in into branch_name_to_merge_into
-# def merge_branch(repo_path, branch_name_to_merge_into, options_str = ''):
-#     cd(repo_path)
-#     cmd = 'git merge ' + options_str + ' ' + branch_name_to_merge_into
-#     run_cmd(cmd, print_output = True, print_cmd = True)
-#     
-#     
-# def tag(repo_path, tag_name):
-#     cd(repo_path)
-#     cmd = 'git tag ' + tag_name
-#     run_cmd(cmd, print_output = True, print_cmd = True)
-#     
-#     
-# def add_all(repo_path):  
-#     add(repo_path, ' . ')
-#     
-# 
-#     
-#     
-# # adds existing, brand new, empty repo as a submodule of existing repo
-# def add_new_repo_as_submodule(top_lvl_repo_path, submodule_repo_path, submodule_repo_url):
-#     add_all(submodule_repo_path) # need
-#     commit(submodule_repo_path, 'Initialized Repository', ' --allow-empty ')
-#     
-#     add_submodule(top_lvl_repo_path, submodule_repo_url)
-#     
-#     add_all(top_lvl_repo_path)
-#     commit_msg = "Initialized repository as submodule:  " + ntpath.basename(submodule_repo_path)
-#     commit(top_lvl_repo_path, commit_msg)
-#     
-     
+
 
 ''' -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- All Utilities Standard Footer -- VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -- '''
 sys.modules = og_sys_modules
 ''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 if __name__ == '__main__':
-#     import repo_transfer
-#     repo_transfer.main()
+    import repo_transfer
+    repo_transfer.main()
 
-    print_output = True
-    print_cmd = True
-        
-    r = Git_Repo('C:\\Users\\mt204e\\Documents\\test\\git_test\\git_flow_test')
-    print(r.get_tag_l(print_output, print_cmd))
+#     print_output = True
+#     print_cmd = True
+#         
+#     r = Git_Repo('C:\\Users\\mt204e\\Documents\\test\\git_test\\git_flow_test')
+#     print(r.get_tag_l(print_output, print_cmd))
        
    
 #     r = Git_Repo("C:\\Users\\mt204e\\Documents\    est\\git_test\    r0")
