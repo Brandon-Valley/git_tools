@@ -310,7 +310,7 @@ class Git_Repo:
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
 #                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
-                for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]]): # axi_MinIM_1.1 -> 1.2
+                for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                     
