@@ -173,7 +173,7 @@ class Git_Repo:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
         
     # remote name should be something like "origin"        
-    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add' + remote_name + ' ' + remote_url                         , print_output
+    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url                        , print_output
                                                                                                                           
                                                                                                                                                                                                   , print_cmd)
     def flow_release_finish (self, version_str, tag_msg   , print_output = False, print_cmd = False):  
@@ -275,6 +275,15 @@ class Git_Repo:
         repo_exists = not su.fatal_error('git rev-parse --is-inside-work-tree')
         cd(og_cwd) # return to original cwd
         return repo_exists
+    
+    
+    def get_tag_l(self, print_output, print_cmd):
+        cmd = 'git tag'
+        tag_l_raw = self.run_git_cmd(cmd, print_output, print_cmd)#, sleep, shell, run_type, decode)
+        print(tag_l_raw)#``````````````````````````````````````````````````````````````````````````````````````````````````````
+        
+        return tag_l
+        
     
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -517,8 +526,17 @@ class Git_Repo:
 sys.modules = og_sys_modules
 ''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 def main():
-    import repo_transfer
-    repo_transfer.main()
+#     import repo_transfer
+#     repo_transfer.main()
+    
+    print_output = True
+    print_cmd = True
+     
+    r = Git_Repo('C:\\Users\\mt204e\\Documents\\test\\git_test\\git_flow_test')
+    print(r.get_tag_l(print_output, print_cmd))
+    
+    
+    
 # #     SUBMODULE_REPO_PATH = "C:\\Users\\mt204e\\Documents\    est\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0\\submodule_repo"
 # #     SUBMODULE_REPO_URL = "https://ba-bit.web.boeing.com/users/mt204e/repos/submodule_repo"
 # #     TOP_LVL_REPO_PATH = "C:\\Users\\mt204e\\Documents\    est\\git_test\\repo_from_command_line_test_dir\\ip_test_from_cmd_0"
