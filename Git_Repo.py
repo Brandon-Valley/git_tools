@@ -69,7 +69,7 @@ class Git_Repo:
          
          
          
-    def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False, strip = False):
+    def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False, strip = False, always_output_list = False):
     #         if run_type not in ['popen']
         eu.error_if_param_key_not_in_whitelist(run_type, ['popen', 'call'])
          
@@ -77,7 +77,7 @@ class Git_Repo:
         cd(self.path)
          
         if run_type == 'popen':
-            output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode, strip)
+            output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode, strip, always_output_list)
         elif run_type == 'call':
             output = su.run_cmd_call (cmd, print_cmd, shell)
          
@@ -122,21 +122,23 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
-    def commit_simple         (self, msg         , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'       , print_output
-                                                                                                                                                      , print_cmd)
-    def checkout_simple       (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name          , print_output
-                                                                                                                                                             , print_cmd)
+    def commit_simple           (self, msg         , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'       , print_output
+                                                                                                                                                        , print_cmd)
+    def checkout_simple         (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name          , print_output
+                                                                                                                                                        , print_cmd)
+    def make_branch_and_checkout(self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout -b ' + branch_name       , print_output
+                                                                                                                                                        , print_cmd)
     # adds repo at the given URL as a submodule of this repo
-    def add_submodule_simple  (self, repo_url    , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
-                                                                                                                                                      , print_cmd)
-    def flow_release_start    (self, version_str , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str, print_output
-                                                                                                                                                      , print_cmd)
-    def delete_tag            (self, tag_name    , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name               , print_output
-                                                                                                                                                      , print_cmd)
+    def add_submodule_simple    (self, repo_url    , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url         , print_output
+                                                                                                                                                        , print_cmd)
+    def flow_release_start      (self, version_str , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str, print_output
+                                                                                                                                                        , print_cmd)
+    def delete_tag              (self, tag_name    , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name               , print_output
+                                                                                                                                                        , print_cmd)
     # merges given branch name into current branch without fast-forwarding 
-    def merge_no_ff           (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
-                                                                                                                                                             , print_cmd
-                                                                                                                                                             , sleep = 0.5) # not optimized    
+    def merge_no_ff             (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
+                                                                                                                                                        , print_cmd
+                                                                                                                                                        , sleep = 0.5) # not optimized    
  
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
@@ -212,6 +214,14 @@ class Git_Repo:
      
     def get_submodule_path_l(self):
         return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True)
+    
+    
+    def get_full_hash_of_tagged_commit(self, tag_name, print_output = False, print_cmd = False):
+        return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd)
+    
+    
+    def get_containing_branches_of_commit_hash(self, commit_hash, print_output = False, print_cmd = False):
+        return self.run_git_cmd('git branch --contains ' + commit_hash   , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
      
      
     def get_num_commits(self):
@@ -291,7 +301,8 @@ class Git_Repo:
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
 #                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
-                for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
+#                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
+                for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                      
