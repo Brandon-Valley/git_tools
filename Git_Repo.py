@@ -217,7 +217,7 @@ class Git_Repo:
     
     
     def get_full_hash_of_tagged_commit(self, tag_name, print_output = False, print_cmd = False):
-        return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd)
+        return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd, decode = True, strip = True)
     
     
     def get_containing_branches_of_commit_hash(self, commit_hash, print_output = False, print_cmd = False):

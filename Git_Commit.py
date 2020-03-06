@@ -63,7 +63,7 @@ class Git_Commit:
                                                                                           + VAR_DELIM + clfs.SUBJECT     \
                                                                                           + VAR_DELIM + clfs.BODY        \
                                                                                     + '"'
-            print('in Git Commit, cmd:  ', cmd)#```````````````````````````````````````````````````````````````````````````````````````````````
+#             print('in Git Commit, cmd:  ', cmd)#```````````````````````````````````````````````````````````````````````````````````````````````
                                                                                            
             raw_commit_data = self.run_git_cmd(cmd     , decode = True)
             
