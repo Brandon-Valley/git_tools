@@ -147,9 +147,12 @@ class Git_Repo:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
          
     # remote name should be something like "origin"        
-    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url                        , print_output
-                                                                                                                           
-                                                                                                                                                                                                  , print_cmd)
+    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url , print_output
+                                                                                                                                                                           , print_cmd)
+    # adds tag on current head commit
+    def add_tag_simple      (self, tag_name, tag_msg      , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -a ' + tag_name + ' -m ' + tag_msg        , print_output
+                                                                                                                                                                           , print_cmd)
+    
     def flow_release_finish (self, version_str, tag_msg   , print_output = False, print_cmd = False):  
         self.run_git_cmd("git flow release finish '" + version_str + "' -m " + '"' + tag_msg + '"'          , print_output, print_cmd)
         self.checkout_simple('develop') # just in case this is this first commit?
