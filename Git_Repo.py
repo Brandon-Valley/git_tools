@@ -211,14 +211,14 @@ class Git_Repo:
             Specific Utility Commands - Return
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+   
+    def get_full_hash_of_tagged_commit(self, tag_name, print_output = False, print_cmd = False):    return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd, decode = True, strip = True)
+    
+    def get_abrv_hash_of_head_commit  (self          , print_output = False, print_cmd = False):    return self.run_git_cmd('git log --pretty=format:%h -n 1'        , print_output, print_cmd, decode = True, strip = True)
+
      
     def get_submodule_path_l(self):
-        return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True)
-    
-    
-    def get_full_hash_of_tagged_commit(self, tag_name, print_output = False, print_cmd = False):
-        return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd, decode = True, strip = True)
-    
+        return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True)    
     
     def get_containing_branches_of_commit_hash(self, commit_hash, print_output = False, print_cmd = False):
         return self.run_git_cmd('git branch --contains ' + commit_hash   , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
@@ -230,7 +230,8 @@ class Git_Repo:
      
     def get_num_commits(self):
         return len(self.get_abrv_commit_hash_l())
-     
+    
+
      
     # most recent commit at position 0
     def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
@@ -270,6 +271,12 @@ class Git_Repo:
         if tag_l == None:
             return []
         return tag_l
+    
+    def head_on_support_branch(self, print_output = False, print_cmd = False):
+        head_abrv_hash = self.get_abrv_hash_of_head_commit(print_output, print_cmd)
+        containing_branches = self.get_containing_branches_of_commit_hash(head_abrv_hash, print_output = True, print_cmd = True)
+        return 'support' in containing_branches[0]
+
              
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
