@@ -168,6 +168,21 @@ class Git_Repo:
                                      + ' -m "'                + subject         + '"'
                                      + ' -m "'                + body            + '"'
                                      , print_output, print_cmd)
+        
+    def merge_full(self, branch_name, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):
+#         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+#                                      + ' git -c user.name="'  + committer_name  + '"'
+#                                      + ' -c user.email="'     + committer_email + '"'
+#                                      + ' merge --no-ff '      + branch_name,
+#                                      print_output, print_cmd)
+
+        
+
+        self.run_git_cmd('git config user.name "John Doe"')
+
+        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+                                     + ' git merge --no-ff '      + branch_name,
+                                     print_output, print_cmd)
  
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
