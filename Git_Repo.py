@@ -179,22 +179,7 @@ class Git_Repo:
                                      + ' --date="'            + new_date_str    + '"'
                                      , print_output, print_cmd)
         
-#         print('')
-#         
-#                         # need because merge doesn't have a --date option
-# #                 proj_repo.amend_head_commit_date_simple(src_ip_commit.author_date, print_output = True, print_cmd = True)  
-#                 author_name = EMAIL_AUTHOR_D[src_ip_commit.author_email]      
-#                 proj_repo.amend_head_commit_date_full(new_date_str    = src_ip_commit.author_date,
-#                                                       committer_name  = author_name,
-#                                                       committer_email = src_ip_commit.author_date,
-#                                                       committer_date  = src_ip_commit.author_date,
-#                                                                                                       print_output = True, print_cmd = True)
         
-        
-#     def amend_head_commit_date_full(self, new_date_str, committer print_output = False, print_cmd = False):  self.run_git_cmd('git commit --no-edit --amend --date="' + new_date_str + '"' , print_output
-#                                                                                                                                                                               , print_cmd)
-        
-    # no clue why but the -c user stuff dosn't work for merge like it does for commit        
     def merge_full(self, branch_name, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):
         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
                                      + 'set GIT_AUTHOR_DATE=' + committer_date + '&&'
@@ -203,36 +188,7 @@ class Git_Repo:
                                      + ' merge --no-ff '      + branch_name     + '"',
                                      print_output, print_cmd)
 
-#         print('about to merge full')
-#         
-#         og_user_name  = self.run_git_cmd('git config user.name' , print_output = True, print_cmd = True, decode = True, strip = True)
-#         og_user_email = self.run_git_cmd('git config user.email', print_output = True, print_cmd = True, decode = True, strip = True)
-#         
-#         
-#         self.run_git_cmd('git config user.name "'  + committer_name  + '"')
-#         self.run_git_cmd('git config user.email "' + committer_email + '"')
-# 
-#         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
-#                                      + ' git merge --no-ff '      + branch_name,
-#                                      print_output, print_cmd)
-#  
-#         self.run_git_cmd('git config user.name "'  + og_user_name  + '"')
-#         self.run_git_cmd('git config user.email "' + og_user_email + '"')
-#         
-#         
-#         
-#         print('just merged full, about to amend head commit,  self.get_abrv_hash_of_head_commit():  ', self.get_abrv_hash_of_head_commit())
-#         
-# # #         self.run_git_cmd('git commit --allow-empty --amend --date="' + committer_date + '"', print_output = print_output, print_cmd = print_cmd)
-# # #         self.amend_head_commit_date_simple(committer_date, print_output = True, print_cmd = True)
-#         self.amend_head_commit_date_full(new_date_str    = committer_date,
-#                                          committer_name  = committer_name,
-#                                          committer_email = committer_email,
-#                                          committer_date  = committer_date,
-#                                          print_output    = print_output,
-#                                          print_cmd       = print_cmd)    
-#         
-#         print('just amended head commit')#```````````````````````````````````````````````````````````````````````````````````````````````````````````````    
+
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
