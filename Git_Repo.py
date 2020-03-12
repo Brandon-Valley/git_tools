@@ -177,13 +177,18 @@ class Git_Repo:
 #                                      print_output, print_cmd)
 
         
-
-        self.run_git_cmd('git config user.name "John Doe"')
+        og_user_name  = self.run_git_cmd('git config user.name' , print_output = True, print_cmd = True, decode = True, strip = True)
+        og_user_email = self.run_git_cmd('git config user.email', print_output = True, print_cmd = True, decode = True, strip = True)
+        
+        self.run_git_cmd('git config user.name "'  + committer_name  + '"')
+        self.run_git_cmd('git config user.email "' + committer_email + '"')
 
         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
                                      + ' git merge --no-ff '      + branch_name,
                                      print_output, print_cmd)
  
+        self.run_git_cmd('git config user.name "'  + og_user_name  + '"')
+        self.run_git_cmd('git config user.email "' + og_user_email + '"')
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
