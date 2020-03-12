@@ -238,8 +238,13 @@ class Git_Repo:
     def get_full_hash_of_tagged_commit(self, tag_name, print_output = False, print_cmd = False):    return self.run_git_cmd('git show-ref -s ' + tag_name            , print_output, print_cmd, decode = True, strip = True)
     
     def get_abrv_hash_of_head_commit  (self          , print_output = False, print_cmd = False):    return self.run_git_cmd('git log --pretty=format:%h -n 1'        , print_output, print_cmd, decode = True, strip = True)
+    
+    
+    def get_head_commit               (self          , print_output = False, print_cmd = False):
+        head_commit_hash = self.run_git_cmd('git log --pretty=format:%h -n 1'        , print_output, print_cmd, decode = True, strip = True)
+        return Git_Commit.Git_Commit(head_commit_hash, self.run_git_cmd)
+        
 
-     
     def get_submodule_path_l(self):
         return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True)    
     
