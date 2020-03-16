@@ -152,9 +152,9 @@ class Git_Repo:
                                                                                                                                                                            , print_cmd)
     # adds repo at the given URL as a submodule of this repo                                                                                                                  
     def add_submodule_simple    (self, repo_url, repo_path, print_output = False, print_cmd = False):
-                                self.run_git_cmd('git submodule add' + repo_url + ' ' + repo_path   , print_output
+                                self.run_git_cmd('git submodule add ' + repo_url + ' ' + repo_path   , print_output
                                                                                                                                                                            , print_cmd)
-                                self.init_submodule_l()
+#                                 self.init_submodule_l()
     
     def flow_release_finish (self, version_str, tag_msg   , print_output = False, print_cmd = False):  
         self.run_git_cmd("git flow release finish '" + version_str + "' -m " + '"' + tag_msg + '"'          , print_output, print_cmd)
@@ -248,7 +248,7 @@ class Git_Repo:
         
 
     def get_submodule_path_l(self):
-        return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True)    
+        return self.run_git_cmd("git config --file .gitmodules --get-regexp path | awk '{ print $2 }'", shell = True, decode = True, strip = True, always_output_list = True)    
     
     def get_containing_branches_of_commit_hash(self, commit_hash, print_output = False, print_cmd = False):
         return self.run_git_cmd('git branch --contains ' + commit_hash   , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
