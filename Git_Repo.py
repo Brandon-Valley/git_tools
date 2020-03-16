@@ -58,14 +58,14 @@ class Git_Repo:
         self.name        = ntpath.basename(self.path)
         self.commit_l    = []
         self.url         = None
-        self.submodule_l = []
+#         self.submodule_l = [] # manually updated
          
         self.flow_init__manual_flag = False # set true by flow_init_default(), will not detect if git flow is initialized elsewhere
      
         if remote_base_url != None:
             self.url = remote_base_url + '//' + self.name
          
-        self.init_submodule_l()
+#         self.init_submodule_l()
          
          
          
@@ -128,9 +128,6 @@ class Git_Repo:
                                                                                                                                                                               , print_cmd)
     def make_branch_and_checkout(self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout -b ' + branch_name                             , print_output
                                                                                                                                                                               , print_cmd)
-    # adds repo at the given URL as a submodule of this repo                                                                                                                  
-    def add_submodule_simple    (self, repo_url    , print_output = False, print_cmd = False):  self.run_git_cmd('git submodule add' + repo_url                               , print_output
-                                                                                                                                                                              , print_cmd)
     def flow_release_start      (self, version_str , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str                      , print_output
                                                                                                                                                                               , print_cmd)
     def delete_tag              (self, tag_name    , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name                                     , print_output
@@ -153,6 +150,11 @@ class Git_Repo:
     # adds tag on current head commit
     def add_tag_simple      (self, tag_name, tag_msg      , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -a ' + tag_name + ' -m ' + tag_msg        , print_output
                                                                                                                                                                            , print_cmd)
+    # adds repo at the given URL as a submodule of this repo                                                                                                                  
+    def add_submodule_simple    (self, repo_url, repo_path, print_output = False, print_cmd = False):
+                                self.run_git_cmd('git submodule add' + repo_url + ' ' + repo_path   , print_output
+                                                                                                                                                                           , print_cmd)
+                                self.init_submodule_l()
     
     def flow_release_finish (self, version_str, tag_msg   , print_output = False, print_cmd = False):  
         self.run_git_cmd("git flow release finish '" + version_str + "' -m " + '"' + tag_msg + '"'          , print_output, print_cmd)
@@ -313,6 +315,7 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
+    # need????????????????????????????????????????????????????????????????????????????????????????????????????
     def init_submodule_l(self):
         sm_path_l = self.get_submodule_path_l()
          
@@ -406,18 +409,18 @@ class Git_Repo:
             self.commit_l.append(c)
      
      
-    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
-    '''                                                                           
-            General Utility Functions
-    '''
-    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
-    def get_submodule_path_l(self):
-        sm_path_l = []
-          
-        for sm_repo in self.submodule_l:
-            sm_path_l.append(sm_repo.path)
-              
-        return sm_path_l
+#     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+#     '''                                                                           
+#             General Utility Functions
+#     '''
+#     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+#     def get_submodule_path_l(self):
+#         sm_path_l = []
+#           
+#         for sm_repo in self.submodule_l:
+#             sm_path_l.append(sm_repo.path)
+#               
+#         return sm_path_l
              
          
              
