@@ -123,8 +123,8 @@ class Git_Commit:
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:" %n---------%n gn   reflog identity name:                                                                                                       %gn %n---------%n gN   reflog identity name (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                            %gN %n---------%n ge   reflog identity email:                                                                                                      %ge %n---------%n gE   reflog identity email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                           %gE %n---------%n gs   reflog subject:                                                                                                             %gs" >> ' + log_file_path)
 
     # undo with git switch -
-    def checkout(self):
-        self.run_git_cmd('git checkout ' + self.abrv_commit_hash , print_output = True, print_cmd = True)
+    def checkout(self, options_str = ''):
+        self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True)
     
     
     
