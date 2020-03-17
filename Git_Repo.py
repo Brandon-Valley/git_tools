@@ -345,7 +345,7 @@ class Git_Repo:
 
 
                 
-                svn_rev_l = [1142, 1141, 1131, 1130]  # Fast_Enet_Support
+                svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
                 import repo_transfer
                 
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
