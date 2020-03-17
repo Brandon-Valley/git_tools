@@ -103,6 +103,8 @@ class Git_Commit:
             # if this commit is from a git repo created by converting from an svn repo
             if 'git-svn-id: ' in self.body:
                 self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+            elif 'git-svn-id: ' in self.subject:
+                self.svn_rev_num = self.subject.split(' ')[-2].split('@')[1]
                 
        
         
