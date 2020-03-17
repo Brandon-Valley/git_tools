@@ -23,6 +23,8 @@ if util_submodule_import_check_count != len(util_submodule_l)    :    raise Exce
 import ntpath
 import time
 
+# import repo_transfer
+
 
 try:
     # for eclipse code-completion 
@@ -334,20 +336,46 @@ class Git_Repo:
         else:
             abrv_commit_hash_l = self.get_abrv_commit_hash_l()
      
+            print('abrv_commit_hash_l:  ', abrv_commit_hash_l)#`1```````````````````````````````````````````````````````````````````
      
             if limited_load:
+                
                 print('Building commit_l - LIMITED LOAD...')
-    #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
-                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l))#``````````````````````````````````````````````````````````````````````````````````````````````````````
-#                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
-                for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
+                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 296, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+
+
+                
+                svn_rev_l = [1142, 1141, 1131, 1130]  # Fast_Enet_Support
+                import repo_transfer
+                
+                commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
+                
+                limited_abrv_commit_hash_l = []
+                for svn_rev_num in svn_rev_l:
+                    commit_num = commit_num_svn_id_d[str(svn_rev_num)]
+                    print('Limited Load, loading commit #: ', commit_num, "   DO NOT DELETE THIS PRINT") # stuff breaks if you remove this, no clue why
+                    abrv_commit_hash = abrv_commit_hash_l[commit_num]
+                    limited_abrv_commit_hash_l.append(abrv_commit_hash)
+                    
+#                 print(limited_abrv_commit_hash_l)
+#                 wait() 
+
+                for abiv_commit_hash in limited_abrv_commit_hash_l: 
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
+
+                
+                
+#     #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
+#                 for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
+#                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+#                     self.commit_l.append(c)
                      
             else:
          
