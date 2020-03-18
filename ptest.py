@@ -5,27 +5,31 @@ import os
 os.chdir('C:\\Users\\mt204e\\Documents\\projects\\Bitbucket_repo_setup\\repos\\ip_repo')
 
 cmd = "git checkout d117685 -f "
-
-# with open("log.txt", "w") as f:
-#     try:
-#         check_call("git checkout d117685 -f ", stderr=f)
-#         df = Popen("git checkout d117685 -f ", stdout=PIPE)
-#         output, err = df.communicate()
-#     except CalledProcessError as e:
-#         print(e)
+print('start')
+with open("log.txt", "w") as f:
+    try:
+        check_call("git checkout d117685 -f ", stderr=f)
+        df = Popen("git checkout d117685 -f ", stdout=PIPE)
+#         check_call("echo hi ", stderr=f)
+#         df = Popen("echo hi ", stdout=PIPE)
+        output, err = df.communicate()
+    except CalledProcessError as e:
+        print(e)
 #         exit(1)
 
+print('end')
 
-s = []
-try:
-    check_call("git checkout d117685 -f ", stderr=s)
-    df = Popen("git checkout d117685 -f ", stdout=PIPE)
-    output, err = df.communicate()
-except CalledProcessError as e:
-    print(e)
-    exit(1)
 
-print('s:  ', s)
+# s = []
+# try:
+#     check_call("git checkout d117685 -f ", stderr=s)
+#     df = Popen("git checkout d117685 -f ", stdout=PIPE)
+#     output, err = df.communicate()
+# except CalledProcessError as e:
+#     print(e)
+#     exit(1)
+# 
+# print('s:  ', s)
 
 
 
