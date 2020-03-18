@@ -124,7 +124,7 @@ class Git_Commit:
 
     # undo with git switch -
     def checkout(self, options_str = ''):
-        self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True)
+        self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
     
     
     
