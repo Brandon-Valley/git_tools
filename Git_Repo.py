@@ -311,8 +311,14 @@ class Git_Repo:
     def head_on_support_branch(self, print_output = False, print_cmd = False):
         head_abrv_hash = self.get_abrv_hash_of_head_commit(print_output, print_cmd)
         containing_branches = self.get_containing_branches_of_commit_hash(head_abrv_hash, print_output = True, print_cmd = True)
-        return 'support' in containing_branches[0]
-
+        print('in Git Repo in head_on_support_branch, containing_branches: ', containing_branches)#````````````````````````````````````````````````````````````````````````````````````````````````
+        
+        for branch_str in containing_branches:
+            if 'support' in branch_str:
+                return True
+            
+        return False
+        
              
      
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
