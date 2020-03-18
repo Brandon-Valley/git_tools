@@ -111,13 +111,16 @@ class Git_Repo:
                                                                             fsu.make_dir_if_not_exist(self.path)
                                                                             self.run_git_cmd('git init'           , print_output
                                                                                                                   , print_cmd)   
-                             
      
     def flow_init_default (self, print_output = False, print_cmd = False):  
                                                                             self.run_git_cmd('git flow init -d -f', print_output
                                                                                                                   , print_cmd)
                                                                             self.flow_init__manual_flag = True
-     
+    def undo_cherry_pick  (self, print_output = False, print_cmd = False):  
+                                                                            self.run_git_cmd('git reset'          , print_output
+                                                                                                                  , print_cmd)
+                                                                            self.run_git_cmd('git clean -dfx'     , print_output
+                                                                                                                  , print_cmd)     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
             Basic Commands - One Arg

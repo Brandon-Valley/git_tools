@@ -126,6 +126,9 @@ class Git_Commit:
     def checkout(self, options_str = ''):
         return self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
     
+    def cherry_pick(self, options_str = ''):
+        return self.run_git_cmd('git cherry-pick ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
+    
     
     
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
