@@ -267,7 +267,8 @@ class Git_Repo:
      
     # most recent commit at position 0
     def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
-        raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output , print_cmd, decode = True)
+        raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output, print_cmd, decode = True)
+#         raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', False , print_cmd, decode = True)
          
         if isinstance(raw_l, str):
             raw_l = [raw_l]
