@@ -166,12 +166,13 @@ class Git_Repo:
         self.checkout_simple('develop') # just in case this is this first commit?
      
          
-    def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
+    def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
  
         self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' commit '
+                                     + ' '                    + options_str              
                                      + ' --date="'            + date            + '"'
                                      + ' -m "'                + subject         + '"'
                                      + ' -m "'                + body            + '"'
@@ -355,7 +356,8 @@ class Git_Repo:
 
 
                 
-                svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
+#                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
+                svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / removing projects as submodules
                 import repo_transfer
                 
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
