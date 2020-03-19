@@ -127,20 +127,23 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
-    def commit_simple           (self, msg         , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'                             , print_output
-                                                                                                                                                                              , print_cmd)
-    def checkout_simple         (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name                                , print_output
-                                                                                                                                                                              , print_cmd)
-    def make_branch_and_checkout(self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout -b ' + branch_name                             , print_output
-                                                                                                                                                                              , print_cmd)
-    def flow_release_start      (self, version_str , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str                      , print_output
-                                                                                                                                                                              , print_cmd)
-    def delete_tag              (self, tag_name    , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name                                     , print_output
-                                                                                                                                                                              , print_cmd)
+    def commit_simple           (self, msg                , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'        , print_output
+                                                                                                                                                                , print_cmd)
+    def checkout_simple         (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name           , print_output
+                                                                                                                                                                , print_cmd)
+    def make_branch_and_checkout(self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout -b ' + branch_name        , print_output
+                                                                                                                                                                , print_cmd)
+    def flow_release_start      (self, version_str        , print_output = False, print_cmd = False):  self.run_git_cmd('git flow release start ' + version_str , print_output
+                                                                                                                                                                , print_cmd)
+    def delete_tag              (self, tag_name           , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -d ' + tag_name                , print_output
+                                                                                                                                                                , print_cmd)
     # merges given branch name into current branch without fast-forwarding 
-    def merge_no_ff             (self, branch_name , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name     , print_output
-                                                                                                                                                        , print_cmd
-                                                                                                                                                        , sleep = 0.5) # not optimized   
+    def merge_no_ff             (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git merge --no-ff ' + branch_name      , print_output
+                                                                                                                                                                , print_cmd
+                                                                                                                                                                , sleep = 0.5) # not optimized  
+    def remove_submodule        (self, submodule_rel_path , print_output = False, print_cmd = False):  
+                                                                                                    self.run_git_cmd('git rm '              + submodule_rel_path, print_output , print_cmd)
+                                                                                                    self.run_git_cmd('rm -rf .git/modules/' + submodule_rel_path, print_output , print_cmd)
      
  
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
@@ -168,7 +171,7 @@ class Git_Repo:
          
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
  
-        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' commit '
@@ -180,7 +183,7 @@ class Git_Repo:
         
     def amend_head_commit_date_full(self, new_date_str, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
  
-        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
+        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' commit --no-edit --amend '
@@ -189,8 +192,8 @@ class Git_Repo:
         
         
     def merge_full(self, branch_name, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):
-        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date + '&&'
-                                     + 'set GIT_AUTHOR_DATE=' + committer_date + '&&'
+        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&'
+                                     + 'set GIT_AUTHOR_DATE=' + committer_date  + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' merge --no-ff '      + branch_name     + '"',
@@ -357,7 +360,8 @@ class Git_Repo:
 
                 
 #                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
-                svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / removing projects as submodules
+#                 svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / adding empty commit
+                svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
                 import repo_transfer
                 
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
