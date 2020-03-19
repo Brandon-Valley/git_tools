@@ -361,8 +361,9 @@ class Git_Repo:
                 
 #                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
 #                 svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / adding empty commit
-                svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
-                svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
+#                 svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
+#                 svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
+                svn_rev_l = [35, 31]  # axi_MinIM 
                 import repo_transfer
                 
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
