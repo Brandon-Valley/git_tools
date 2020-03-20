@@ -171,7 +171,7 @@ class Git_Repo:
          
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
  
-        self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&'
+        return self.run_git_cmd('cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&'
                                      + ' git -c user.name="'  + committer_name  + '"'
                                      + ' -c user.email="'     + committer_email + '"'
                                      + ' commit '
@@ -179,7 +179,7 @@ class Git_Repo:
                                      + ' --date="'            + date            + '"'
                                      + ' -m "'                + subject         + '"'
                                      + ' -m "'                + body            + '"'
-                                     , print_output, print_cmd)
+                                     , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
         
     def amend_head_commit_date_full(self, new_date_str, committer_name, committer_email, committer_date, print_output = False, print_cmd = False):  
  
@@ -355,7 +355,7 @@ class Git_Repo:
             if limited_load:
                 
                 print('Building commit_l - LIMITED LOAD...')
-                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 296, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 293, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
 
 
                 
@@ -364,21 +364,22 @@ class Git_Repo:
 # #                 svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
 # #                 svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
 # #                 svn_rev_l = [35, 31]  # axi_MinIM 
-#                 svn_rev_l = [49]  # 
+# #                 svn_rev_l = [49]  # 
+#                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
 #                 import repo_transfer
-#                 
+#                  
 #                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
-#                 
+#                  
 #                 limited_abrv_commit_hash_l = []
 #                 for svn_rev_num in svn_rev_l:
 #                     commit_num = commit_num_svn_id_d[str(svn_rev_num)]
 #                     print('Limited Load, loading commit #: ', commit_num, "   DO NOT DELETE THIS PRINT") # stuff breaks if you remove this, no clue why
 #                     abrv_commit_hash = abrv_commit_hash_l[commit_num]
 #                     limited_abrv_commit_hash_l.append(abrv_commit_hash)
-#                     
+#                      
 # #                 print(limited_abrv_commit_hash_l)
 # #                 wait() 
-# 
+#  
 #                 for abiv_commit_hash in limited_abrv_commit_hash_l: 
 #                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
 #                     self.commit_l.append(c)
@@ -393,21 +394,22 @@ class Git_Repo:
 #                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
 #                 for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
-                for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # axi_uart
+#                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # axi_uart
+                for abiv_commit_hash in (abrv_commit_hash_l[5:34]): # AXI_HI_8429
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
-                     
+                      
             else:
-         
+          
                 print('Building commit_l normally...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
                 print(' in git repo, building commit_l, abrv_commit_hash_l', abrv_commit_hash_l)#`````````````````````````````````````````````````````````````````
-                 
+                  
                 for abiv_commit_hash in abrv_commit_hash_l:
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
-         
+          
                 print('# of commits in commit_l:  ', len(self.commit_l))#````````````````````````````````````````````````````````````````````````````````````````````````
-                 
+                  
                 if LOG_COMMIT_L:
                     print('Logging newly created commit_l to json file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
                     self.log_commit_l()
