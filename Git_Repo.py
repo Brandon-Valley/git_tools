@@ -369,8 +369,8 @@ class Git_Repo:
 #                 svn_rev_l = [35, 31]  # axi_MinIM 
 #                 svn_rev_l = [49]  # 
 #                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
-                svn_rev_l = [1125, 1020]  # AXI_HI_84...
-#                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
+#                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
+                svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
                 import repo_transfer
                    
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
