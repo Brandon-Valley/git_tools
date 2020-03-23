@@ -171,6 +171,8 @@ class Git_Repo:
          
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
  
+        print('in Git_Repo, body: ', body)#```````````````````````````````````````````````````````````````````````````````````````````
+ 
         cmd =   'cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&' \
         + ' git -c user.name="'  + committer_name  + '"'                      \
         + ' -c user.email="'     + committer_email + '"'                      \
