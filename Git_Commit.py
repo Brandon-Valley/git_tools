@@ -77,10 +77,10 @@ class Git_Commit:
             self.author       = commit_data_l.pop(0)                                          
             self.author_email = commit_data_l.pop(0)                                          
             self.author_date  = commit_data_l.pop(0) 
-#             print('in Git_Commit, subject portion of raw_commit_data:  ', commit_data_l[0])#`````````````````````````````````````````````````````````````                                 
+            print('in Git_Commit, subject portion of raw_commit_data:  ', commit_data_l[0])#`````````````````````````````````````````````````````````````                                 
                                          
             self.subject      = commit_data_l.pop(0)         
-#             print('in Git_Commit, body portion of raw_commit_data:  ', commit_data_l[0])#`````````````````````````````````````````````````````````````                                 
+            print('in Git_Commit, body portion of raw_commit_data:  ', commit_data_l[0])#`````````````````````````````````````````````````````````````                                 
             self.body         = commit_data_l.pop(0)  
             
             

@@ -170,17 +170,16 @@ class Git_Repo:
      
          
     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
- 
         print('in Git_Repo, body: ', body)#```````````````````````````````````````````````````````````````````````````````````````````
  
         cmd =   'cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&' \
-        + ' git -c user.name="'  + committer_name  + '"'                      \
-        + ' -c user.email="'     + committer_email + '"'                      \
+        + ' git -c user.name="'  + committer_name             + '"'           \
+        + ' -c user.email="'     + committer_email            + '"'           \
         + ' commit '                                                          \
         + ' '                    + options_str                                \
-        + ' --date="'            + date            + '"'                      \
-        + ' -m "'                + subject         + '"'                      \
-        + ' -m "'                + body            + '"'
+        + ' --date="'            + date                       + '"'           \
+        + ' -m "'                + subject.replace('"', '\\"') + '"'          \
+        + ' -m "'                + body.replace('"', '\\"')    + '"'
               
         print('in Git_Repo, cmd:  ', cmd)#```````````````````````````````````````````````````````````````````````````````````````````````````````
         return self.run_git_cmd(cmd, print_output, print_cmd, decode = True, strip = True, always_output_list = True)
@@ -372,7 +371,8 @@ class Git_Repo:
 #                 svn_rev_l = [49]  # 
 #                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
 #                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
-                svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
+#                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
+                svn_rev_l = [920]  # double quotes in commit msg
 #                 svn_rev_l = [953]  # multi-line commit msg
                 import repo_transfer
                    
