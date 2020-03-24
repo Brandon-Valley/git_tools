@@ -360,7 +360,8 @@ class Git_Repo:
                 
                 print('Building commit_l - LIMITED LOAD...')
                 print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 293, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
-
+                if len(abrv_commit_hash_l) != 293:
+                    raise Exception("^^^ IP repo probably messed up")
 
                 
 #                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
