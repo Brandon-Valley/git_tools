@@ -388,9 +388,10 @@ class Git_Repo:
 #                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
 #                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
 #                 svn_rev_l = [920]  # double quotes in commit msg
-                svn_rev_l = [953]  # multi-line commit msg
+#                 svn_rev_l = [953]  # multi-line commit msg
 #                 svn_rev_l = [931, 930]  # axi4lite
 #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
+                svn_rev_l = [1161]  # empty commit - Rich told me
                 import repo_transfer
                      
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
