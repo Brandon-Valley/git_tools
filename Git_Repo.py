@@ -169,8 +169,20 @@ class Git_Repo:
         self.checkout_simple('develop') # just in case this is this first commit?
      
          
-    def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
-        print('in Git_Repo, body: ', body)#```````````````````````````````````````````````````````````````````````````````````````````
+#     def commit_full(self, subject, body, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
+    def commit_full(self, msg_file_path, author, date, committer_name, committer_email, committer_date, options_str = '', print_output = False, print_cmd = False):  
+#         print('in Git_Repo, body: ', body)#```````````````````````````````````````````````````````````````````````````````````````````
+#  
+#         cmd =   'cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&' \
+#         + ' git -c user.name="'  + committer_name             + '"'           \
+#         + ' -c user.email="'     + committer_email            + '"'           \
+#         + ' commit '                                                          \
+#         + ' '                    + options_str                                \
+#         + ' --date="'            + date                        + '"'          \
+#         + ' -m "'                + subject                     + '"'          \
+#         + ' -m "'                + body                        + '"'
+
+#         print('in Git_Repo, body: ', body)#```````````````````````````````````````````````````````````````````````````````````````````
  
         cmd =   'cmd /v /c "set GIT_COMMITTER_DATE=' + committer_date  + '&&' \
         + ' git -c user.name="'  + committer_name             + '"'           \
@@ -178,8 +190,8 @@ class Git_Repo:
         + ' commit '                                                          \
         + ' '                    + options_str                                \
         + ' --date="'            + date                        + '"'          \
-        + ' -m "'                + subject                     + '"'          \
-        + ' -m "'                + body                        + '"'
+        + ' -F "'                + msg_file_path               + '"'           
+
 
               
         print('in Git_Repo, cmd:  ', cmd)#```````````````````````````````````````````````````````````````````````````````````````````````````````
@@ -372,26 +384,26 @@ class Git_Repo:
 # #                 svn_rev_l = [35, 31]  # axi_MinIM 
 # #                 svn_rev_l = [49]  # 
 # #                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
-# #                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
+#                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
 # #                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
-#                 svn_rev_l = [920]  # double quotes in commit msg
+# #                 svn_rev_l = [920]  # double quotes in commit msg
 # #                 svn_rev_l = [953]  # multi-line commit msg
 # #                 svn_rev_l = [931, 930]  # axi4lite
 # #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
 #                 import repo_transfer
-#                    
+#                     
 #                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
-#                    
+#                     
 #                 limited_abrv_commit_hash_l = []
 #                 for svn_rev_num in svn_rev_l:
 #                     commit_num = commit_num_svn_id_d[str(svn_rev_num)]
 #                     print('Limited Load, loading commit #: ', commit_num, "   DO NOT DELETE THIS PRINT") # stuff breaks if you remove this, no clue why
 #                     abrv_commit_hash = abrv_commit_hash_l[commit_num]
 #                     limited_abrv_commit_hash_l.append(abrv_commit_hash)
-#                        
+#                         
 # #                 print(limited_abrv_commit_hash_l)
 # #                 wait() 
-#    
+#     
 #                 for abiv_commit_hash in limited_abrv_commit_hash_l: 
 #                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
 #                     self.commit_l.append(c)
@@ -408,7 +420,7 @@ class Git_Repo:
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # axi_uart
 #                 for abiv_commit_hash in (abrv_commit_hash_l[5:34]): # AXI_HI_8429
-                for abiv_commit_hash in ([abrv_commit_hash_l[51]]): # golden .ZIP - well formatted, spaced out multi-line comment
+                for abiv_commit_hash in ([abrv_commit_hash_l[59]]): # golden .ZIP - well formatted, spaced out multi-line comment
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                       
