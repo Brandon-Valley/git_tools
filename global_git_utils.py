@@ -20,6 +20,7 @@ if util_submodule_import_check_count != len(util_submodule_l)    :    raise Exce
 
 
 
+
 def get_user_name(print_output = False, print_cmd = False):
     cmd = 'git config user.name'
     return su.run_cmd_popen(cmd, print_output, print_cmd, decode = True)
