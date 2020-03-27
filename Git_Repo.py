@@ -382,7 +382,7 @@ class Git_Repo:
 #                 svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / adding empty commit
 #                 svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
 #                 svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
-#                 svn_rev_l = [35, 31]  # axi_MinIM 
+                svn_rev_l = [35, 31]  # axi_MinIM 
 #                 svn_rev_l = [49]  # 
 #                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
 #                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
@@ -391,7 +391,7 @@ class Git_Repo:
 #                 svn_rev_l = [953]  # multi-line commit msg
 #                 svn_rev_l = [931, 930]  # axi4lite
 #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
-                svn_rev_l = [1161]  # empty commit - Rich told me
+#                 svn_rev_l = [1161]  # empty commit - Rich told me
                 import repo_transfer
                      
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
