@@ -126,8 +126,8 @@ class Git_Commit:
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:" %n---------%n gn   reflog identity name:                                                                                                       %gn %n---------%n gN   reflog identity name (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                            %gN %n---------%n ge   reflog identity email:                                                                                                      %ge %n---------%n gE   reflog identity email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                           %gE %n---------%n gs   reflog subject:                                                                                                             %gs" >> ' + log_file_path)
 
     # undo with git switch -
-    def checkout(self, options_str = ''):
-        return self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
+    def checkout(self, options_str = '', return_stderr = True):
+        return self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True, return_stderr = return_stderr)
     
     def cherry_pick(self, options_str = ''):
         return self.run_git_cmd('git cherry-pick ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)

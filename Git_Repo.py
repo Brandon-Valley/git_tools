@@ -71,7 +71,7 @@ class Git_Repo:
          
          
          
-    def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False, strip = False, always_output_list = False):
+    def run_git_cmd(self, cmd, print_output = False, print_cmd = False, sleep = 0, shell = False, run_type = 'popen', decode = False, strip = False, always_output_list = False, return_stderr = True):
     #         if run_type not in ['popen']
         eu.error_if_param_key_not_in_whitelist(run_type, ['popen', 'call'])
          
@@ -79,7 +79,7 @@ class Git_Repo:
         cd(self.path)
          
         if run_type == 'popen':
-            output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode, strip, always_output_list)
+            output = su.run_cmd_popen(cmd, print_output, print_cmd, shell, decode, strip, always_output_list, return_stderr = return_stderr)
         elif run_type == 'call':
             output = su.run_cmd_call (cmd, print_cmd, shell)
          
@@ -373,60 +373,62 @@ class Git_Repo:
             if limited_load:
                 
                 print('Building commit_l - LIMITED LOAD...')
-                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 322 or 293, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
-                if not len(abrv_commit_hash_l) == 322 or len(abrv_commit_hash_l) == 293:
+                print('in GIT_Repo, len(hash lit)', len(abrv_commit_hash_l), ' <-- if this number is not 322, 359, or 293, probably means ip repo messed up')#``````````````````````````````````````````````````````````````````````````````````````````````````````
+                if not (len(abrv_commit_hash_l) == 322 or len(abrv_commit_hash_l) == 293 or len(abrv_commit_hash_l) == 359):
                     raise Exception("^^^ IP repo probably messed up")
 
                 
-# #                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
-# #                 svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / adding empty commit
-# #                 svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
-# #                 svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
-# #                 svn_rev_l = [35, 31]  # axi_MinIM 
-# #                 svn_rev_l = [49]  # 
-# #                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
-# #                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
-# #                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
-# #                 svn_rev_l = [920]  # double quotes in commit msg
-# #                 svn_rev_l = [953]  # multi-line commit msg
-# #                 svn_rev_l = [931, 930]  # axi4lite
-# #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
-# #                 svn_rev_l = [1161]  # empty commit - Rich told me
+#                 svn_rev_l = [1142, 1141, 1131, 1130, 1128, 980]  # Fast_Enet_Support
+#                 svn_rev_l = [1161, 930]  # axi4lite_LTC2666 / adding empty commit
+#                 svn_rev_l = [1160, 930]  # axi4lite_LTC2666 / removing projects as submodules
+#                 svn_rev_l = [732, 295]  # vv_index.xml / other files in src_ip_repo (there are no other files)
+#                 svn_rev_l = [35, 31]  # axi_MinIM 
+#                 svn_rev_l = [49]  # 
+#                 svn_rev_l = [1155, 1154, 1153, 1152, 1151, 1150, 1149,1126, 1020]  # AXI_HI_84...
+#                 svn_rev_l = [1125, 1020]  # AXI_HI_84...
+#                 svn_rev_l = [158, 94, 65]  # axi_MinIM duplicate commit merge bug
+#                 svn_rev_l = [920]  # double quotes in commit msg
+#                 svn_rev_l = [953]  # multi-line commit msg
+#                 svn_rev_l = [931, 930]  # axi4lite
+#                 svn_rev_l = [50, 49, 30]  # axi_global_regs
+#                 svn_rev_l = [1161]  # empty commit - Rich told me
 #                 svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
-#                 import repo_transfer
-#                      
-#                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
-#                      
-#                 limited_abrv_commit_hash_l = []
-#                 for svn_rev_num in svn_rev_l:
-#                     commit_num = commit_num_svn_id_d[str(svn_rev_num)]
-#                     print('Limited Load, loading commit #: ', commit_num, "   DO NOT DELETE THIS PRINT") # stuff breaks if you remove this, no clue why
-#                     abrv_commit_hash = abrv_commit_hash_l[commit_num]
-#                     limited_abrv_commit_hash_l.append(abrv_commit_hash)
-#                          
-# #                 print(limited_abrv_commit_hash_l)
-# #                 wait() 
-#      
-#                 for abiv_commit_hash in limited_abrv_commit_hash_l: 
-#                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
-#                     self.commit_l.append(c)
+                svn_rev_l = [967, 736]
+                import repo_transfer
+                      
+                commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
+                      
+                limited_abrv_commit_hash_l = []
+                for svn_rev_num in svn_rev_l:
+                    commit_num = commit_num_svn_id_d[str(svn_rev_num)]
+                    print('Limited Load, loading commit #: ', commit_num, "   DO NOT DELETE THIS PRINT") # stuff breaks if you remove this, no clue why
+                    abrv_commit_hash = abrv_commit_hash_l[commit_num]
+                    limited_abrv_commit_hash_l.append(abrv_commit_hash)
+                          
+#                 print(limited_abrv_commit_hash_l)
+#                 wait() 
+      
+                for abiv_commit_hash in limited_abrv_commit_hash_l: 
+                    c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+                    self.commit_l.append(c)
 
                 
                 
-    #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
-#                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
-#                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # axi_uart
-#                 for abiv_commit_hash in (abrv_commit_hash_l[5:34]): # AXI_HI_8429
-#                 for abiv_commit_hash in ([abrv_commit_hash_l[59]]): # golden .ZIP - well formatted, spaced out multi-line comment
-                for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # fresh pull after axi_dma_sdlc_v0_6
-                    c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
-                    self.commit_l.append(c)
+#     #                 for abiv_commit_hash in (abrv_commit_hash_l[:4] + abrv_commit_hash_l[-5:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[:2] + [abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]] + abrv_commit_hash_l[-2:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-2:]):
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-12::-14]):
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-12]] + [abrv_commit_hash_l[-13]]): # axi global regs changes only
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-16]] + abrv_commit_hash_l[-8:-4]): # axi_MinIM_1.1 -> 1.2
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[-116]] + [abrv_commit_hash_l[-18]] + [abrv_commit_hash_l[-15]]): # axi_dma out of order versions
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-32:]): # axi_dma up to v1.4
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # axi_uart
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[5:34]): # AXI_HI_8429
+# #                 for abiv_commit_hash in ([abrv_commit_hash_l[59]]): # golden .ZIP - well formatted, spaced out multi-line comment
+# #                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # fresh pull after axi_dma_sdlc_v0_6
+#                 for abiv_commit_hash in (abrv_commit_hash_l[734:]): # 
+#                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
+#                     self.commit_l.append(c)
                       
             else:
           
@@ -521,8 +523,10 @@ class Git_Repo:
 sys.modules = og_sys_modules
 ''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 if __name__ == '__main__':
-    import repo_transfer
-    repo_transfer.main()
+#     import repo_transfer
+#     repo_transfer.main()
+    import add_branch_ip
+    add_branch_ip.main()
 
 #     print_output = True
 #     print_cmd = True
