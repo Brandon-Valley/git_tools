@@ -427,7 +427,7 @@ class Git_Repo:
 #                 for abiv_commit_hash in ([abrv_commit_hash_l[59]]): # golden .ZIP - well formatted, spaced out multi-line comment
 #                 for abiv_commit_hash in (abrv_commit_hash_l[-22:]): # fresh pull after axi_dma_sdlc_v0_6
 #                 for abiv_commit_hash in (abrv_commit_hash_l[239:]): # add_branch_ip ,<<<===================================================<<<===<<<===<<<===<<<===<<<===<<<===<<<===<<<
-                for abiv_commit_hash in (abrv_commit_hash_l[18:]): # 
+                for abiv_commit_hash in (abrv_commit_hash_l[-18:]): # 
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
                     self.commit_l.append(c)
                       
