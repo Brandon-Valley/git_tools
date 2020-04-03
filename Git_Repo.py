@@ -368,7 +368,7 @@ class Git_Repo:
             # this part really shouldn't be in this submodule, but I'm lazy
             abrv_commit_hash_l = self.get_abrv_commit_hash_l()
      
-            print('abrv_commit_hash_l:  ', abrv_commit_hash_l)#`1```````````````````````````````````````````````````````````````````
+#             print('abrv_commit_hash_l:  ', abrv_commit_hash_l)#`1```````````````````````````````````````````````````````````````````
      
             if limited_load:
                 
@@ -434,7 +434,7 @@ class Git_Repo:
             else:
           
                 print('Building commit_l normally...')#``````````````````````````````````````````````````````````````````````````````````````````````````````````
-                print(' in git repo, building commit_l, abrv_commit_hash_l', abrv_commit_hash_l)#`````````````````````````````````````````````````````````````````
+#                 print(' in git repo, building commit_l, abrv_commit_hash_l', abrv_commit_hash_l)#`````````````````````````````````````````````````````````````````
                   
                 for abiv_commit_hash in abrv_commit_hash_l:
                     c = Git_Commit.Git_Commit(abiv_commit_hash, self.run_git_cmd)
