@@ -65,12 +65,12 @@ class Git_Commit:
                                                                                     + '"'
 #             print('in Git Commit, cmd:  ', cmd)#```````````````````````````````````````````````````````````````````````````````````````````````
                                                                                            
-            raw_commit_data = self.run_git_cmd(cmd     , decode = True)
+            raw_commit_data = self.run_git_cmd(cmd     , decode = True, print_output = False, print_cmd = False)
             
             if type(raw_commit_data) == list: # if someone used newlines in their commit body
                 raw_commit_data = ''.join(raw_commit_data)
                 
-#             print('raw_commit_data: ', raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
+#             print('in Git_Commit:  raw_commit_data: ', raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
             commit_data_l = raw_commit_data.split(VAR_DELIM)
             commit_data_l.pop(0) # remove first empty element
     
@@ -201,9 +201,11 @@ class Git_Commit:
 sys.modules = og_sys_modules
 ''' ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ '''
 if __name__ == '__main__':
-    import repo_transfer
-    repo_transfer.main()
+#     import repo_transfer
+#     repo_transfer.main()
 
+    from PIC_transfer import PIC_transfer
+    PIC_transfer.main()
 
 #     import Git_Repo
 # #     Git_Repo.main()

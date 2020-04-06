@@ -526,8 +526,12 @@ sys.modules = og_sys_modules
 if __name__ == '__main__':
 #     import repo_transfer
 #     repo_transfer.main()
-    import add_branch_ip
-    add_branch_ip.main()
+# 
+#     import add_branch_ip
+#     add_branch_ip.main()
+
+    from PIC_transfer import PIC_transfer
+    PIC_transfer.main()
 
 #     print_output = True
 #     print_cmd = True
