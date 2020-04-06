@@ -111,6 +111,36 @@ class Git_Commit:
                 
        
         
+
+
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Commands
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    # undo with git switch -
+    def checkout(self, options_str = '', return_stderr = True):
+        return self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True, return_stderr = return_stderr)
+    
+    def cherry_pick(self, options_str = ''):
+        return self.run_git_cmd('git cherry-pick ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
+    
+    
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Get Info
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    def no_changed_files(self):
+        return len(self.changed_files_l) == 0
+        
+    
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+    '''                                                                           
+            Json Log Functions - For Testing
+    '''
+    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+        
     # if no log_file_path is given, will log to default location
     def log_commit_data(self, log_file_path = None):
         if log_file_path == None:
@@ -124,21 +154,7 @@ class Git_Commit:
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:" %n---------%n e   encoding:                                                                                                                    %e %n---------%n s   subject:                                                                                                                     %s %n---------%n f   sanitized subject line, suitable for a filename:                                                                             %f %n---------%n b   body:                                                                                                                        %b %n---------%n B   raw body (unwrapped subject and body):                                                                                       %B %n---------%n N   commit notes:                                                                                                                %N %n---------%n GG   raw verification message from GPG for a signed commit:                                                                      %GG" >> ' + log_file_path)
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:" %n---------%n G?   signature options - check doc for more info -- manually trimmed:                                                            %G? %n---------%n GS   show the name of the signer for a signed commit:                                                                            %GS %n---------%n GK   show the key used to sign a signed commit:                                                                                  %GK %n---------%n GF   show the fingerprint of the key used to sign a signed commit:                                                               %GF %n---------%n GP   show the fingerprint of the primary key whose subkey was used to sign a signed commit:                                      %GP %n---------%n gD   reflog selector - check doc for more info -- manually trimmed:                                                              %gD %n---------%n gd   shortened reflog selector; - check doc for more info -- manually trimmed:                                                   %gd" >> ' + log_file_path)
         self.run_git_cmd(print_cmd = True, shell = True, run_type = 'call', cmd = 'git log ' + self.abrv_commit_hash + ' -n1 --oneline --pretty=format:" %n---------%n gn   reflog identity name:                                                                                                       %gn %n---------%n gN   reflog identity name (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                            %gN %n---------%n ge   reflog identity email:                                                                                                      %ge %n---------%n gE   reflog identity email (respecting .mailmap, see git-shortlog[1] or git-blame[1]):                                           %gE %n---------%n gs   reflog subject:                                                                                                             %gs" >> ' + log_file_path)
-
-    # undo with git switch -
-    def checkout(self, options_str = '', return_stderr = True):
-        return self.run_git_cmd('git checkout ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True, return_stderr = return_stderr)
-    
-    def cherry_pick(self, options_str = ''):
-        return self.run_git_cmd('git cherry-pick ' + self.abrv_commit_hash + ' ' + options_str , print_output = True, print_cmd = True, decode = True, strip = True, always_output_list = True)
-    
-    
-    
-    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
-    '''                                                                           
-            Json Log Functions - For Testing
-    '''
-    ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
+        
     
     def json_log_tup(self):
         return (
