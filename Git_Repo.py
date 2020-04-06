@@ -120,7 +120,10 @@ class Git_Repo:
                                                                             self.run_git_cmd('git reset'          , print_output
                                                                                                                   , print_cmd)
                                                                             self.run_git_cmd('git clean -dfx'     , print_output
-                                                                                                                  , print_cmd)     
+                                                                                                                  , print_cmd)   
+    def delete_lock_file (self):
+        fsu.delete_if_exists(self.path + '//.git//index.lock')
+                                                                               
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
             Basic Commands - One Arg
