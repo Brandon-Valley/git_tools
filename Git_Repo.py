@@ -395,9 +395,9 @@ class Git_Repo:
 #                 svn_rev_l = [931, 930]  # axi4lite
 #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
 #                 svn_rev_l = [1161]  # empty commit - Rich told me
-#                 svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
+                svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
 #                 svn_rev_l = [967, 736]
-                svn_rev_l = [851, 822, 427, 378, 294, 286, 107 ] # axi_hx1_spi tagging 1.2 bug
+#                 svn_rev_l = [851, 822, 427, 378, 294, 286, 107 ] # axi_hx1_spi tagging 1.2 bug
                 import repo_transfer
                        
                 commit_num_svn_id_d = json_logger.read(repo_transfer.COMMIT_NUM_SVN_ID_JSON_PATH)
