@@ -162,8 +162,8 @@ class Git_Repo:
     def add_tag_simple      (self, tag_name, tag_msg      , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -a ' + tag_name + ' -m ' + tag_msg        , print_output
                                                                                                                                                                            , print_cmd)
     # adds repo at the given URL as a submodule of this repo                                                                                                                  
-    def add_submodule_simple    (self, repo_url, repo_path, print_output = False, print_cmd = False):
-                                self.run_git_cmd('git submodule add ' + repo_url + ' ' + repo_path   , print_output
+    def add_submodule_simple    (self, repo_url, repo_path, options_str = '', print_output = False, print_cmd = False):
+                                self.run_git_cmd('git submodule add ' + repo_url + ' ' + repo_path + ' ' + options_str , print_output
                                                                                                                                                                            , print_cmd)
 #                                 self.init_submodule_l()
     
