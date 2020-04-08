@@ -156,11 +156,12 @@ class Git_Repo:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
          
     # remote name should be something like "origin"        
-    def add_remote          (self, remote_name, remote_url, print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url , print_output
-                                                                                                                                                                           , print_cmd)
-    # adds tag on current head commit
-    def add_tag_simple      (self, tag_name, tag_msg      , print_output = False, print_cmd = False):  self.run_git_cmd('git tag -a ' + tag_name + ' -m ' + tag_msg        , print_output
-                                                                                                                                                                           , print_cmd)
+    def add_remote          (self, remote_name, remote_url            , print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url             , print_output
+                                                                                                                                                                                                   , print_cmd)
+    
+    # adds tag on current head commit unless given hash in options str
+    def add_tag_simple      (self, tag_name, tag_msg, options_str = '', print_output = False, print_cmd = False):  self.run_git_cmd('git tag -a ' + tag_name + ' -m ' + tag_msg + ' ' + options_str, print_output
+                                                                                                                                                                                                   , print_cmd)
     # adds repo at the given URL as a submodule of this repo                                                                                                                  
     def add_submodule_simple    (self, repo_url, repo_path, options_str = '', print_output = False, print_cmd = False):
                                 self.run_git_cmd('git submodule add ' + repo_url + ' ' + repo_path + ' ' + options_str , print_output
@@ -395,7 +396,8 @@ class Git_Repo:
 #                 svn_rev_l = [931, 930]  # axi4lite
 #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
 #                 svn_rev_l = [1161]  # empty commit - Rich told me
-                svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
+#                 svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
+                svn_rev_l = [976, 887, 309, 308, 158, 94, 65, 63, 60,  44, 7]  # axi_dma full
 #                 svn_rev_l = [967, 736]
 #                 svn_rev_l = [851, 822, 427, 378, 294, 286, 107 ] # axi_hx1_spi tagging 1.2 bug
                 import repo_transfer
