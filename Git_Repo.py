@@ -363,7 +363,7 @@ class Git_Repo:
      
      
     # takes about 40 sec for ip_repo with no prints
-    def build_commit_l(self, limited_load = False): 
+    def build_commit_l(self, limited_load = False, repo_hash_svn_id_log_path = None): 
          
         if LOAD_COMMIT_L_FROM_JSON_FILE_IF_EXISTS and fsu.is_file(COMMIT_L_LOG_JSON_FILE_PATH):
             print('Loading commit_l from log file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
@@ -396,8 +396,11 @@ class Git_Repo:
 #                 svn_rev_l = [931, 930]  # axi4lite
 #                 svn_rev_l = [50, 49, 30]  # axi_global_regs
 #                 svn_rev_l = [1161]  # empty commit - Rich told me
-#                 svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1
-                svn_rev_l = [976, 887, 309, 308, 158, 94, 65, 63, 60,  44, 7]  # axi_dma full
+#                 svn_rev_l = [976, 158, 94, 65, 60,  44, 7]  # axi_dma not making support branch when tagging after commit for 1.1 + axi_dm_uart
+#                 svn_rev_l = [976, 893, 887, 7]  # axi_dma, axi_adis1647x short
+#                 svn_rev_l = [977, 976, 893, 887, 7]  # axi_dma, axi_uart short
+#                 svn_rev_l = [976, 887, 309, 308, 158, 94, 65, 63, 60,  44, 7]  # axi_dma full
+                svn_rev_l = [977, 976, 887, 309, 308, 158, 94, 65, 63, 60,  44, 7]  # axi_dma full + axi_dm_uart
 #                 svn_rev_l = [967, 736]
 #                 svn_rev_l = [851, 822, 427, 378, 294, 286, 107 ] # axi_hx1_spi tagging 1.2 bug
                 import repo_transfer
@@ -451,6 +454,8 @@ class Git_Repo:
                 if LOG_COMMIT_L:
                     print('Logging newly created commit_l to json file:  ', COMMIT_L_LOG_JSON_FILE_PATH, '...')
                     self.log_commit_l()
+                    
+
      
      
      
