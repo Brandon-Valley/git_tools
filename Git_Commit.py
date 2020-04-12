@@ -24,6 +24,7 @@ import commit_log_format_strings as clfs
 
 
 
+
 VAR_DELIM = '__$$@-VAR_DELIM-@$__'
 
 
@@ -72,6 +73,11 @@ class Git_Commit:
                 
 #             print('in Git_Commit:  raw_commit_data: ', raw_commit_data)#``````````````````````````````````````````````````````````````````````````````````````````````````````````
             commit_data_l = raw_commit_data.split(VAR_DELIM)
+            
+#             for e in commit_data_l:#```````````````````````````````````````````````````````````````````````````````````
+#                 print(e)
+#             print(commit_data_l)#``````````````````````````````````````````````````````````````````````````````````````````````
+            
             commit_data_l.pop(0) # remove first empty element
     
             self.author       = commit_data_l.pop(0)                                          
@@ -105,7 +111,11 @@ class Git_Commit:
                                                                                               
             # if this commit is from a git repo created by converting from an svn repo
             if 'git-svn-id: ' in self.body:
-                self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+#                 print('in Git_Commit, self.body: ', self.body)#````````````````````````````````````````````````````````````````````````
+                try:
+                    self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
+                except IndexError:
+                    self.svn_rev_num = self.body.split('git-svn-id: https://wpns04.stl.mo.boeing.com/ANPsvn/Trunk/ip_repo@')[1].split(' ')[0]
             elif 'git-svn-id: ' in self.subject:
                 self.svn_rev_num = self.subject.split(' ')[-2].split('@')[1]
                 
