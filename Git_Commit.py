@@ -108,6 +108,9 @@ class Git_Commit:
                              
             self.changed_files_l = list(reversed(self.changed_files_l)) # put back in abc order
                      
+                     
+#             if self.abrv_commit_hash == '0c6a850':#``````````````````````````````````````````````````````````````````````````````````
+#                 print('b')
                                                                                               
             # if this commit is from a git repo created by converting from an svn repo
             if 'git-svn-id: ' in self.body:
