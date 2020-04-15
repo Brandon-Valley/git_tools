@@ -343,6 +343,10 @@ class Git_Repo:
                 return True
             
         return False
+    
+    
+    def get_commit_from_hash(self, commit_hash):
+        return Git_Commit.Git_Commit(commit_hash, self.run_git_cmd)
         
              
      
