@@ -130,8 +130,7 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
-    def commit_simple           (self, msg                , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a -m "' + msg + '"'        , print_output
-                                                                                                                                                                , print_cmd)
+
     def checkout_simple         (self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout ' + branch_name           , print_output
                                                                                                                                                                 , print_cmd)
     def make_branch_and_checkout(self, branch_name        , print_output = False, print_cmd = False):  self.run_git_cmd('git checkout -b ' + branch_name        , print_output
@@ -154,6 +153,8 @@ class Git_Repo:
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
+    def commit_simple       (self, msg, options_str = ''              , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a ' + options_str + ' -m "' + msg + '"'           , print_output
+                                                                                                                                                                                                   , print_cmd)     
          
     # remote name should be something like "origin"        
     def add_remote          (self, remote_name, remote_url            , print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url             , print_output
