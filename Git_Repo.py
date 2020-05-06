@@ -60,6 +60,7 @@ class Git_Repo:
         self.name        = ntpath.basename(self.path)
         self.commit_l    = []
         self.url         = None
+        
 #         self.submodule_l = [] # manually updated
          
         self.flow_init__manual_flag = False # set true by flow_init_default(), will not detect if git flow is initialized elsewhere
@@ -103,8 +104,6 @@ class Git_Repo:
      
     def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'            , print_output
                                                                                                                     , print_cmd)
-    def clone             (self, print_output = False, print_cmd = False):  self.run_git_cmd('git clone ' + self.url, print_output
-                                                                                                                    , print_cmd)
     def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'       , print_output
                                                                                                                     , print_cmd)
     def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'         , print_output
@@ -122,9 +121,13 @@ class Git_Repo:
                                                                             self.run_git_cmd('git reset'            , print_output
                                                                                                                     , print_cmd)
                                                                             self.run_git_cmd('git clean -dfx'       , print_output
-                                                                                                                    , print_cmd)   
+                                                                                                                    , print_cmd) 
+                                                                              
+    def clone_to_cwd      (self, print_output = False, print_cmd = False):  self.run_git_cmd('git clone ' + self.url + ' . ', print_output
+                                                                                                                                                       , print_cmd)                                                                            
     def delete_lock_file (self):
         fsu.delete_if_exists(self.path + '//.git//index.lock')
+    
                                                                                
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     '''                                                                           
