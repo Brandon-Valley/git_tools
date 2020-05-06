@@ -101,26 +101,28 @@ class Git_Repo:
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
      
-    def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'          , print_output
-                                                                                                                  , print_cmd)
-    def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'     , print_output
-                                                                                                                  , print_cmd)
-    def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'       , print_output
-                                                                                                                  , print_cmd)    
-    def init_repo_simple  (self, print_output = False, print_cmd = False):  
-                                                                            fsu.make_dir_if_not_exist(self.path)
-                                                                            self.run_git_cmd('git init'           , print_output
-                                                                                                                  , print_cmd)   
-     
-    def flow_init_default (self, print_output = False, print_cmd = False):  
-                                                                            self.run_git_cmd('git flow init -d -f', print_output
-                                                                                                                  , print_cmd)
-                                                                            self.flow_init__manual_flag = True
-    def undo_cherry_pick  (self, print_output = False, print_cmd = False):  
-                                                                            self.run_git_cmd('git reset'          , print_output
-                                                                                                                  , print_cmd)
-                                                                            self.run_git_cmd('git clean -dfx'     , print_output
-                                                                                                                  , print_cmd)   
+    def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'            , print_output
+                                                                                                                    , print_cmd)
+    def clone             (self, print_output = False, print_cmd = False):  self.run_git_cmd('git clone ' + self.url, print_output
+                                                                                                                    , print_cmd)
+    def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'       , print_output
+                                                                                                                    , print_cmd)
+    def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'         , print_output
+                                                                                                                    , print_cmd)    
+    def init_repo_simple  (self, print_output = False, print_cmd = False):                                          
+                                                                            fsu.make_dir_if_not_exist(self.path)    
+                                                                            self.run_git_cmd('git init'             , print_output
+                                                                                                                    , print_cmd)   
+                                                                                                                    
+    def flow_init_default (self, print_output = False, print_cmd = False):                                          
+                                                                            self.run_git_cmd('git flow init -d -f'  , print_output
+                                                                                                                    , print_cmd)
+                                                                            self.flow_init__manual_flag = True      
+    def undo_cherry_pick  (self, print_output = False, print_cmd = False):                                          
+                                                                            self.run_git_cmd('git reset'            , print_output
+                                                                                                                    , print_cmd)
+                                                                            self.run_git_cmd('git clean -dfx'       , print_output
+                                                                                                                    , print_cmd)   
     def delete_lock_file (self):
         fsu.delete_if_exists(self.path + '//.git//index.lock')
                                                                                
