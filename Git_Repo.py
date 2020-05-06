@@ -51,6 +51,14 @@ LOG_COMMIT_L = False
     
      
 def cd(dir_path):
+    
+    while(True):
+        try:
+            os.chdir(dir_path)
+            break
+        except:
+            print('got permission error when trying to cd, trying again...')
+    
     os.chdir(dir_path)
      
      
@@ -290,8 +298,19 @@ class Git_Repo:
         return self.run_git_cmd('git branch --contains ' + commit_hash   , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
     
     
-    def get_branch_l(self, print_output = False, print_cmd = False):
-        return self.run_git_cmd('git branch', print_output, print_cmd, decode = True, strip = True, always_output_list = True)
+    def get_branch_l(self, trimmed = False, print_output = False, print_cmd = False):
+        branch_l_raw = self.run_git_cmd('git branch', print_output, print_cmd, decode = True, strip = True, always_output_list = True)
+        
+        if trimmed == False:
+            return branch_l_raw
+        else:
+            branch_l_trimmed = []
+            for branch_str in branch_l_raw:
+                branch_l_trimmed.append(branch_str.replace('* ', ''))
+            
+            return branch_l_trimmed
+    
+
      
      
     def get_num_commits(self):
