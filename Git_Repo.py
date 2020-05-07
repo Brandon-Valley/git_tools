@@ -52,12 +52,12 @@ LOG_COMMIT_L = False
      
 def cd(dir_path):
     
-    while(True):
-        try:
-            os.chdir(dir_path)
-            break
-        except:
-            print('got permission error when trying to cd, trying again...')
+#     while(True):
+#         try:
+#             os.chdir(dir_path)
+#             break
+#         except:
+#             print('got permission error when trying to cd, trying again...')
     
     os.chdir(dir_path)
      
@@ -132,7 +132,13 @@ class Git_Repo:
                                                                                                                     , print_cmd) 
                                                                               
     def clone_to_cwd      (self, print_output = False, print_cmd = False):  self.run_git_cmd('git clone ' + self.url + ' . ', print_output
-                                                                                                                                                       , print_cmd)                                                                            
+                                                                                                                            , print_cmd)   
+             
+    def track_all_remote_branches(self, print_output = False, print_cmd = False): 
+#         cmd = 'for /f "delims=" %%r in (' + "'git branch -r ^| grep -v master') do git checkout --track %%r"
+        cmd = 'for /f "delims=" %r in (' + "'git branch -r ^| grep -v master') do git checkout --track %r"
+        self.run_git_cmd(cmd, print_output, print_cmd, return_stderr = False, shell = True)       
+              
     def delete_lock_file (self):
         fsu.delete_if_exists(self.path + '//.git//index.lock')
     
