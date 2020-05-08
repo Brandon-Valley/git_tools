@@ -131,13 +131,13 @@ class Git_Repo:
                                                                             self.run_git_cmd('git clean -dfx'       , print_output
                                                                                                                     , print_cmd) 
                                                                               
-    def clone_to_cwd      (self, print_output = False, print_cmd = False):  
+    def clone_to_cwd      (self, print_output = False, print_cmd = False, shell = False, run_type = 'popen'):  
         # just running make_dir_if_not_exist() before clone still sometimes throws FileNotFoundError
         try:
-            self.run_git_cmd('git clone ' + self.url + ' . ', print_output, print_cmd)  
+            self.run_git_cmd('git clone ' + self.url + ' . ', print_output, print_cmd, shell, run_type)  
         except FileNotFoundError:
             fsu.make_dir_if_not_exist(self.path) 
-            self.run_git_cmd('git clone ' + self.url + ' . ', print_output, print_cmd) 
+            self.run_git_cmd('git clone ' + self.url + ' . ', print_output, print_cmd, shell, run_type) 
             
              
     def track_all_remote_branches(self, print_output = False, print_cmd = False): 
