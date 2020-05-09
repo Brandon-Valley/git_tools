@@ -112,8 +112,8 @@ class Git_Repo:
      
     def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'            , print_output
                                                                                                                     , print_cmd)
-    def push_all_branches (self, print_output = False, print_cmd = False):  self.run_git_cmd('git push --all'       , print_output
-                                                                                                                    , print_cmd)
+    def push_all_branches (self, print_output = False, print_cmd = False, **kwargs):  self.run_git_cmd('git push --all' , print_output
+                                                                                                                        , print_cmd, **kwargs)
     def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'         , print_output
                                                                                                                     , print_cmd)    
     def init_repo_simple  (self, print_output = False, print_cmd = False):                                          
@@ -180,8 +180,8 @@ class Git_Repo:
             Basic Commands - Many Args
     '''
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''  
-    def commit_simple       (self, msg, options_str = ''              , print_output = False, print_cmd = False):  self.run_git_cmd('git commit -a ' + options_str + ' -m "' + msg + '"'           , print_output
-                                                                                                                                                                                                   , print_cmd)     
+    def commit_simple           (self, msg, options_str = ''              , print_output = False, print_cmd = False, **kwargs):  self.run_git_cmd('git commit -a ' + options_str + ' -m "' + msg + '"' , print_output
+                                                                                                                                                                                                   , print_cmd, **kwargs)     
          
     # remote name should be something like "origin"        
     def add_remote          (self, remote_name, remote_url            , print_output = False, print_cmd = False):  self.run_git_cmd('git remote add ' + remote_name + ' ' + remote_url             , print_output
