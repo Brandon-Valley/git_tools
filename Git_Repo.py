@@ -112,7 +112,7 @@ class Git_Repo:
      
     def add_all_files     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git add .'            , print_output
                                                                                                                     , print_cmd)
-    def push_all_branches (self, print_output = False, print_cmd = False, **kwargs):  self.run_git_cmd('git push --all' , print_output
+    def push_all_branches (self, print_output = False, print_cmd = False, **kwargs): return self.run_git_cmd('git push --all' , print_output
                                                                                                                         , print_cmd, **kwargs)
     def undo_checkout     (self, print_output = False, print_cmd = False):  self.run_git_cmd('git switch -'         , print_output
                                                                                                                     , print_cmd)    
