@@ -140,10 +140,12 @@ class Git_Repo:
             self.run_git_cmd('git clone ' + self.url + ' . ', print_output, print_cmd, shell, run_type) 
             
              
-    def track_all_remote_branches(self, print_output = False, print_cmd = False): 
+#     def track_all_remote_branches(self, print_output = False, print_cmd = False, run_type = 'popen'): 
+    def track_all_remote_branches(self, **kwargs): 
 #         cmd = 'for /f "delims=" %%r in (' + "'git branch -r ^| grep -v master') do git checkout --track %%r"
         cmd = 'for /f "delims=" %r in (' + "'git branch -r ^| grep -v master') do git checkout --track %r"
-        self.run_git_cmd(cmd, print_output, print_cmd, return_stderr = False, shell = True)       
+#         self.run_git_cmd(cmd, print_output, print_cmd, return_stderr = False, shell = True, run_type = run_type)       
+        self.run_git_cmd(cmd, return_stderr = False, shell = True, **kwargs)       
               
     def delete_lock_file (self):
         fsu.delete_if_exists(self.path + '//.git//index.lock')
@@ -318,8 +320,8 @@ class Git_Repo:
         return self.run_git_cmd('git branch --contains ' + commit_hash   , print_output, print_cmd, decode = True, strip = True, always_output_list = True)
     
     
-    def get_branch_l(self, trimmed = False, print_output = False, print_cmd = False):
-        branch_l_raw = self.run_git_cmd('git branch', print_output, print_cmd, decode = True, strip = True, always_output_list = True)
+    def get_branch_l(self, trimmed = False, print_output = False, print_cmd = False, **kwargs):
+        branch_l_raw = self.run_git_cmd('git branch', print_output, print_cmd, decode = True, strip = True, always_output_list = True, **kwargs)
         
         if trimmed == False:
             return branch_l_raw
@@ -333,14 +335,14 @@ class Git_Repo:
 
      
      
-    def get_num_commits(self):
-        return len(self.get_abrv_commit_hash_l())
+    def get_num_commits(self, **kwargs):
+        return len(self.get_abrv_commit_hash_l(**kwargs))
     
 
      
     # most recent commit at position 0
-    def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False):  
-        raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output, print_cmd, decode = True)
+    def get_abrv_commit_hash_l (self, print_output = False, print_cmd = False, **kwargs):  
+        raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', print_output, print_cmd, decode = True, **kwargs)
                 
 #         raw_l = self.run_git_cmd('git log --oneline --pretty=format:"%h"', False , print_cmd, decode = True)
          
