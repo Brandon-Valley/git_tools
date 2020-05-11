@@ -124,7 +124,15 @@ class Git_Repo:
     def flow_init_default (self, print_output = False, print_cmd = False):                                          
                                                                             self.run_git_cmd('git flow init -d -f'  , print_output
                                                                                                                     , print_cmd)
-                                                                            self.flow_init__manual_flag = True      
+                                                                            self.flow_init__manual_flag = True
+#     # makes and checks out master and develop, dosn't take forever                                                                                                                                                                                            
+#     def pretend_to_init_git_flow (self, print_output = False, print_cmd = False):                                          
+#                                                                             self.run_git_cmd('git checkout -b master'  , print_output
+#                                                                                                                         , print_cmd)
+#                                                                             self.run_git_cmd('git checkout -b develop'  , print_output
+#                                                                                                                         , print_cmd)
+#                                                                             self.flow_init__manual_flag = True
+                                                                                  
     def undo_cherry_pick  (self, print_output = False, print_cmd = False):                                          
                                                                             self.run_git_cmd('git reset'            , print_output
                                                                                                                     , print_cmd)
