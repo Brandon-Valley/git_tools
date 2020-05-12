@@ -194,7 +194,7 @@ class Git_Commit:
     ''' VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV '''
     def print_me(self, oneline = False):
         if oneline == True:
-            print('Commit print_me:  '  , self.abrv_commit_hash, '  Subject:  ', self.subject         )
+            print('Commit print_me:  '  , self.abrv_commit_hash, 'Svn_rev: ', self.svn_rev_num, '  Subject:  ', self.subject         )
         else:
             print('Commit print_me:  '  , self.abrv_commit_hash)
             print('  author         :  ', self.author          )
