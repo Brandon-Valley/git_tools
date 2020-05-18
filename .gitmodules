@@ -1,3 +1,9 @@
-[submodule "util_submodules__gu/subprocess_utils"]
-	path = util_submodules__gu/subprocess_utils
+[submodule "usms/subprocess_utils"]
+	path = usms/subprocess_utils
 	url = https://github.com/Brandon-Valley/subprocess_utils.git
+[submodule "usms/logger"]
+	path = usms/logger
+	url = https://github.com/Brandon-Valley/logger.git
+[submodule "usms/file_system_utils"]
+	path = usms/file_system_utils
+	url = https://github.com/Brandon-Valley/file_system_utils.git
