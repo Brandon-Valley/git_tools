@@ -114,11 +114,14 @@ class Git_Commit:
                                                                                               
             # if this commit is from a git repo created by converting from an svn repo
             if 'git-svn-id: ' in self.body:
-#                 print('in Git_Commit, self.body: ', self.body)#````````````````````````````````````````````````````````````````````````
+                print('in Git_Commit, self.body: ', self.body)#````````````````````````````````````````````````````````````````````````
                 try:
                     self.svn_rev_num = self.body.split(' ')[-2].split('@')[1]
                 except IndexError:
-                    self.svn_rev_num = self.body.split('git-svn-id: https://wpns04.stl.mo.boeing.com/ANPsvn/Trunk/ip_repo@')[1].split(' ')[0]
+                    try:
+                        self.svn_rev_num = self.body.split('git-svn-id: https://wpns04.stl.mo.boeing.com/ANPsvn/Trunk/ip_repo@')[1].split(' ')[0]
+                    except IndexError:
+                        self.svn_rev_num = False
             elif 'git-svn-id: ' in self.subject:
                 self.svn_rev_num = self.subject.split(' ')[-2].split('@')[1]
                 
